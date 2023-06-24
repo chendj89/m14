@@ -1,0 +1,17 @@
+@use "sass:math";
+@use "@/scss/var.module" as *;
+
+// 根据宽度获取高度
+@function getHeightByWidth($width) {
+  @return make-even(ceil(math.div($width,$ar)));
+}
+// 取整
+@function make-even($num) {
+  $unit: unit($num); // 获取数值的单位
+  $value:  math.div($num, $num * 0 + 1) or calc($num / ($num * 0 + 1)); // 将数值转换为偶数
+  @if $unit != "" {
+    @return #{$value}#{$unit}; // 如果有单位，返回带单位的数值
+  } @else {
+    @return $value; // 如果没有单位，返回数值
+  }
+}

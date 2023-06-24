@@ -1,0 +1,15 @@
+$theme: #ff5c00;
+$size: 16px;
+$tabSplitMenuWidth: 65px;
+$minMenuWidth: 65px;
+$menuWidth: var(--menu-width);
+$transitionTime: 0.3s ease;
+$logoHeight: 48px;
+$tabHeight: 40px;
+$footerHeight: 0px;
+// 宽长比例13/16
+$ar: 0.8125;
+:export {
+  theme: $theme;
+  ar: $ar;
+}
