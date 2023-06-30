@@ -70,33 +70,32 @@ const usePermissionStore = defineStore('permission-route', {
       return !this.permissionRoutes || this.permissionRoutes.length === 0
     },
     addVirtualPermissionRoute(name: string, route: RouteRecordRaw) {
-      this.permissionRoutes=[...this.permissionRoutes,route]
-      // let parentRoute = this.permissionRoutes.find((item) => {
-      //   return item.name == name
-      // })
-      // if (parentRoute && parentRoute.children) {
-      //   let oIndex = -1
-      //   parentRoute.children.some((item, index) => {
-      //     if (item.path == route.path) {
-      //       oIndex = index
-      //     }
-      //     return item.path == route.path
-      //   })
-      //   if (route.meta?.isForce) {
-      //     if (oIndex == -1) {
-      //       parentRoute.children.push(route)
-      //     } else {
-      //       parentRoute.children.splice(oIndex,1)
-      //       parentRoute.children.push(route)
-      //     }
-      //   } else {
-      //     if (oIndex == -1) {
-      //       parentRoute.children.push(route)
-      //     } else {
-      //       parentRoute.children.splice(oIndex, 1, route)
-      //     }
-      //   }
-      // }
+      let parentRoute = this.permissionRoutes.find((item) => {
+        return item.name == name
+      })
+      if (parentRoute && parentRoute.children) {
+        let oIndex = -1
+        parentRoute.children.some((item, index) => {
+          if (item.path == route.path) {
+            oIndex = index
+          }
+          return item.path == route.path
+        })
+        if (route.meta?.isForce) {
+          if (oIndex == -1) {
+            parentRoute.children.push(route)
+          } else {
+            parentRoute.children.splice(oIndex, 1)
+            parentRoute.children.push(route)
+          }
+        } else {
+          if (oIndex == -1) {
+            parentRoute.children.push(route)
+          } else {
+            parentRoute.children.splice(oIndex, 1, route)
+          }
+        }
+      }
     },
     reload() {
       this.initPermissionRoute()

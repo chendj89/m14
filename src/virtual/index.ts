@@ -28,9 +28,8 @@ export default async function loadVirtual(to: any) {
           return res
         })
     }
-    const mapRoutes = mapTwoLevelRouter([virtualRoute])
-    console.log('mapRoutes',mapRoutes)
     router.addRoute('Dashboard',virtualRoute)
+    console.log('virtualRoute',virtualRoute)
     permissionStore.addVirtualPermissionRoute('Dashboard',virtualRoute)
     resolve(true)
   })
