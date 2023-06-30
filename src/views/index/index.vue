@@ -14,7 +14,13 @@ const router = useRouter()
 const addRoute = () => {
   const name = 'virtual1'
   if (!router.hasRoute(name)) {
-    loadVirtual({ name })
+    loadVirtual({
+      name,
+      meta: {
+        title: '动态路由' + new Date().getDate(),
+        isForce:true
+      }
+    })
   }
   router.push(name)
 }

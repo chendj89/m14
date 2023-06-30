@@ -1,32 +1,65 @@
+import { LAYOUT } from "@/store/keys";
 export default [
   {
-    path: "/index",
-    title: "Dashborad",
-    name: "dashborad",
-    icon: "icon-dashboard",
-    parentPath: "",
+    path: '/index',
+    component: LAYOUT,
+    name: 'Dashboard',
+    meta: {
+      title: '控制台',
+      iconPrefix: 'icon',
+      icon: 'dashboard'
+    },
+    redirect: '/index/index',
     children: [
       {
-        parentPath: "/index",
-        path: "/index/index",
-        title: "首页",
-        name: "Index",
+        path: 'index',
+        name: 'Index',
+        component: () => import('@/views/index/index.vue'),
+        meta: {
+          title: '首页',
+          affix: true,
+          cacheable: true,
+          iconPrefix: 'icon',
+          icon: 'menu'
+        }
       },
-    ],
+      {
+        path: 'box',
+        name: 'Box',
+        component: () => import('@/views/index/box.vue'),
+        meta: {
+          title: '盒子',
+          affix: false,
+          cacheable: true,
+          iconPrefix: 'icon',
+          icon: 'menu'
+        }
+      }
+    ]
   },
   {
-    path: "/table",
-    title: "Table",
-    name: "Table",
-    icon: "icon-table",
-    parentPath: "",
+    path: '/table',
+    component: LAYOUT,
+    name: 'Table',
+    meta: {
+      title: '表格',
+      iconPrefix: 'icon',
+      icon: 'table'
+    },
+    redirect: '/table/menu',
     children: [
       {
-        parentPath: "/table",
-        path: "/table/menu",
-        title: "菜单",
-        name: "TableMenu",
-      },
-    ],
-  },
-];
+        path: 'menu',
+        name: 'TableMenu',
+        component: () => import('@/views/table/menu.vue'),
+        meta: {
+          title: '菜单',
+          affix: true,
+          cacheable: true,
+          iconPrefix: 'icon',
+          icon: 'menu'
+        }
+      }
+    ]
+  }
+]

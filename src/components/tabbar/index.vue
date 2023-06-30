@@ -16,13 +16,14 @@
           class="tab-item"
           strong
           secondary
-          style="--n-height: 24px; --n-font-weight: 200"
+          style="--n-height: 26px; --n-font-weight: 200;"
           :data="item.path"
           @click.self="itemClick(item)"
           @contextmenu="onContextMenu(item, $event)"
         >
+         <SvgIcon style="margin-right:4px" :name="item.meta?.icon" />
           <span
-            style="font-size: 12px; margin-top: 2px"
+            style="font-size: 13px; margin-top: 2px"
             class="text-item"
             @click.self="itemClick(item)"
           >

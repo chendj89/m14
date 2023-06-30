@@ -1,33 +1,20 @@
-import { isExternal, toHump } from '@/utils'
+import { isExternal } from '@/utils'
 import { resolve } from 'path-browserify'
 import { h, ref } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import type { OriginRoute, SplitTab } from '../types'
 import { type MenuOption, NIcon, NBadge } from 'naive-ui'
 import SvgIcon from '@/components/svg-icon/index.vue'
-import { asyncRoutes } from '@/router/routes/async'
-import { LAYOUT } from '../keys'
-
-export function loadComponents() {
-  return import.meta.glob('/src/views/**/*.vue')
-}
-
-export const asynComponents = loadComponents()
-
-export function getComponent(it: OriginRoute) {
-  // return defineAsyncComponent({
-  //   loader: asynComponents[getFilePath(it)],
-  //   loadingComponent: LoadingComponent,
-  // })
-  return asynComponents[getFilePath(it)]
-}
-
-export function getFilePath(it: OriginRoute) {
-  if (!it.localFilePath) {
-    it.localFilePath = it.path
-  }
-  it.localFilePath = resolve('/', it.localFilePath)
-  return '/src/views' + it.localFilePath + '.vue'
+let meta = {
+  title: '',
+  affix: false,
+  cacheable: false,
+  icon: '',
+  iconPrefix: '',
+  badge: '',
+  hidden: false,
+  isRootPath: false,
+  isSingle: false
 }
 
 export function findRootPathRoute(routes: RouteRecordRaw[]) {
@@ -48,89 +35,25 @@ export function findRootPathRoute(routes: RouteRecordRaw[]) {
     : '/'
 }
 
-export function filterRoutesFromLocalRoutes(
-  route: OriginRoute,
-  localRoutes: Array<RouteRecordRaw>,
-  path = '/'
-) {
-  const filterRoute = localRoutes.find((it) => {
-    return resolve(path, it.path) === route.path
-  })
-  if (filterRoute) {
-    let meta = {
-      title: '',
-      affix: false,
-      cacheable: false,
-      icon: '',
-      iconPrefix: '',
-      badge: '',
-      hidden: false,
-      isRootPath: false,
-      isSingle: false
-    }
-    filterRoute.meta = Object.assign({},meta,filterRoute.meta); 
-    const parentPath = resolve(path, filterRoute.path)
-    if (
-      Array.isArray(route.children) &&
-      route.children.length > 0 &&
-      Array.isArray(filterRoute.children) &&
-      filterRoute.children.length > 0
-    ) {
-      const tempChildren: RouteRecordRaw[] = []
-      route.children.forEach((it) => {
-        const childFilterRoute = filterRoutesFromLocalRoutes(
-          it,
-          filterRoute.children!,
-          parentPath
-        )
-        childFilterRoute && tempChildren.push(childFilterRoute)
-      })
-      filterRoute.children = tempChildren
-    }
-  }
-  return filterRoute
-}
-
 export function isMenu(it: OriginRoute) {
   return it.children && it.children.length > 0
-}
-
-export function getNameByUrl(menuUrl: string) {
-  const temp = path.split('/')
-  return toHump(temp[temp.length - 1])
 }
 
 export function generatorRoutes(res: Array<OriginRoute>) {
   const tempRoutes: Array<RouteRecordRaw> = []
   res.forEach((it) => {
     const isMenuFlag = isMenu(it)
-    const localRoute = isMenuFlag
-      ? filterRoutesFromLocalRoutes(it, asyncRoutes)
-      : null
-    if (localRoute) {
-      tempRoutes.push(localRoute as RouteRecordRaw)
-    } else {
-      const route: RouteRecordRaw = {
-        path: it.outLink && isExternal(it.outLink) ? it.outLink : it.path,
-        name: it.name || getNameByUrl(it.path),
-        component: isMenuFlag ? LAYOUT : getComponent(it),
-        meta: {
-          hidden: !!it.hidden,
-          title: it.menuName,
-          affix: !!it.affix,
-          cacheable: !!it.cacheable,
-          icon: it.icon || 'menu',
-          iconPrefix: it.iconPrefix || 'icon',
-          badge: it.badge,
-          isRootPath: !!it.isRootPath,
-          isSingle: !!it.isSingle
-        }
+    const route: RouteRecordRaw = {
+      ...it,
+      meta: {
+        ...meta,
+        ...it.meta
       }
-      if (it.children) {
-        route.children = generatorRoutes(it.children)
-      }
-      tempRoutes.push(route)
     }
+    if (isMenuFlag) {
+      route.children = generatorRoutes(it.children)
+    }
+    tempRoutes.push(route)
   })
   return tempRoutes
 }

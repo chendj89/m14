@@ -1,5 +1,4 @@
 import { LAYOUT } from '@/store/keys'
-
 export const constantRoutes = [
   {
     path: '/login',

@@ -16,10 +16,13 @@ import AutoImport from 'unplugin-auto-import/vite'
 // svg
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
+import VueDevTools from 'vite-plugin-vue-devtools'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   base: process.env.NODE_ENV == 'development' ? '/' : '/m7/',
   plugins: [
+    VueDevTools(),
     vue({
       script: {
         propsDestructure: true

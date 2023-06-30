@@ -9,7 +9,7 @@ import { constantRoutes } from '@/router/routes/constants'
 const usePermissionStore = defineStore('permission-route', {
   state: () => {
     return {
-      permissionRoutes: [] as RouteRecordRaw[],
+      permissionRoutes: [] as RouteRecordRaw[]
     }
   },
   getters: {
@@ -20,9 +20,11 @@ const usePermissionStore = defineStore('permission-route', {
     },
     getPermissionSplitTabs(state) {
       return state.permissionRoutes.filter((it) => {
-        return it.meta && !it.meta.hidden && it.children && it.children.length > 0
+        return (
+          it.meta && !it.meta.hidden && it.children && it.children.length > 0
+        )
       })
-    },
+    }
   },
   actions: {
     async getRoutes(data: { userId: number; roleId: number }) {
@@ -40,11 +42,9 @@ const usePermissionStore = defineStore('permission-route', {
       // 加载路由
       const accessRoutes = await this.getRoutes({
         roleId: userStore.roleId,
-        userId: userStore.userId,
+        userId: userStore.userId
       })
       const mapRoutes = mapTwoLevelRouter(accessRoutes)
-      console.log('mapRoutes',mapRoutes)
-
       mapRoutes.forEach((it: any) => {
         router.addRoute(it)
       })
@@ -53,29 +53,58 @@ const usePermissionStore = defineStore('permission-route', {
         path: '/',
         redirect: findRootPathRoute(accessRoutes),
         meta: {
-          hidden: true,
-        },
+          hidden: true
+        }
       })
       // 这个路由一定要放在最后
       router.addRoute({
         path: '/:pathMatch(.*)*',
         redirect: '/404',
         meta: {
-          hidden: true,
-        },
+          hidden: true
+        }
       })
       this.permissionRoutes = [...constantRoutes, ...accessRoutes]
     },
     isEmptyPermissionRoute() {
       return !this.permissionRoutes || this.permissionRoutes.length === 0
     },
-    reload(){
+    addVirtualPermissionRoute(name: string, route: RouteRecordRaw) {
+      this.permissionRoutes=[...this.permissionRoutes,route]
+      // let parentRoute = this.permissionRoutes.find((item) => {
+      //   return item.name == name
+      // })
+      // if (parentRoute && parentRoute.children) {
+      //   let oIndex = -1
+      //   parentRoute.children.some((item, index) => {
+      //     if (item.path == route.path) {
+      //       oIndex = index
+      //     }
+      //     return item.path == route.path
+      //   })
+      //   if (route.meta?.isForce) {
+      //     if (oIndex == -1) {
+      //       parentRoute.children.push(route)
+      //     } else {
+      //       parentRoute.children.splice(oIndex,1)
+      //       parentRoute.children.push(route)
+      //     }
+      //   } else {
+      //     if (oIndex == -1) {
+      //       parentRoute.children.push(route)
+      //     } else {
+      //       parentRoute.children.splice(oIndex, 1, route)
+      //     }
+      //   }
+      // }
+    },
+    reload() {
       this.initPermissionRoute()
     },
     reset() {
       this.$reset()
-    },
-  },
+    }
+  }
 })
 
 export default usePermissionStore

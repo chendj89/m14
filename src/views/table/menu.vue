@@ -1,6 +1,5 @@
 <template>
-  <div>
-  </div>
+  <div>menu</div>
 </template>
 
 <script setup lang="ts" name="TableMenu"></script>
