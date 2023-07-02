@@ -8,3 +8,48 @@ body,
 #app {
   height: 100vh;
 }
+
+.menuCard {
+  $width: 296px;
+  $gap: 8px;
+  display: inline-block;
+  padding: $gap;
+  background: #fff;
+  width: $width;
+  min-height: $width * 0.6;
+  border-radius: $gap * 0.5;
+  // width:createGrid(8px,40px,6,1);
+  &-box {
+    display: none;
+  }
+  &-banner {
+    display: block;
+    width: 100%;
+    height: 130px;
+    border-radius: $gap * 0.5;
+    overflow: hidden;
+    &-content {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center center;
+    }
+  }
+  &-content {
+    padding-top: $gap;
+  }
+  &-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: $gap * 0.5;
+    img {
+      display: block;
+      width: 60%;
+    }
+  }
+}

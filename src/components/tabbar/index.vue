@@ -21,7 +21,6 @@
           @click.self="itemClick(item)"
           @contextmenu="onContextMenu(item, $event)"
         >
-         <SvgIcon style="margin-right:4px" :name="item.meta?.icon" />
           <span
             style="font-size: 13px; margin-top: 2px"
             class="text-item"

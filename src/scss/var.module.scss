@@ -8,8 +8,14 @@ $logoHeight: 48px;
 $tabHeight: 40px;
 $footerHeight: 0px;
 // 宽长比例13/16
-$ar: 0.8125;
+$ar: 0.8;
 :export {
   theme: $theme;
   ar: $ar;
+}
+
+@function createGrid($gap, $size, $counter, $line) {
+  $width: $gap * ($counter + 1) + $size * $counter;
+  @warn $width;
+  @return $width;
 }

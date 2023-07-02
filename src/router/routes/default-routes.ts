@@ -34,6 +34,18 @@ export default [
           iconPrefix: 'icon',
           icon: 'menu'
         }
+      },
+      {
+        path: 'fun',
+        name: 'Fun',
+        component: () => import('@/views/index/fun.vue'),
+        meta: {
+          title: '有趣',
+          affix: false,
+          cacheable: true,
+          iconPrefix: 'icon',
+          icon: 'menu'
+        }
       }
     ]
   },

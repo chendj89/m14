@@ -28,9 +28,7 @@ const onLogin = () => {
   ]
   userStore.saveUser(data as UserState).then(() => {
     router
-      .replace({
-        path: route.query.redirect ? (route.query.redirect as string) : '/'
-      })
+      .push({path:'/'})
       .then(() => {
         loading.value = false
       })
