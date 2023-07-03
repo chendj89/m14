@@ -18,12 +18,6 @@
       class="menuCard-item"
       src="https://www.naiveui.com/assets/naivelogo-93278402.svg"
     ></MenuIcon>
-    <MenuIcon
-      padding
-      skeleton
-      class="menuCard-item"
-      src="https://avatars.githubusercontent.com/u/6297087?s=48&v=4"
-    ></MenuIcon>
   </div>
 </template>
 

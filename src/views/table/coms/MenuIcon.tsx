@@ -39,8 +39,14 @@ export default defineComponent({
       if (src.startsWith('<svg')) {
         let themes = await getThemeByBase64(src)
         theme.value = ref({
-          ...createImageTheme(themes),
-          content: src
+          ...createImageTheme({
+            theme: themes,
+            content: src,
+            blob: {
+              size: 0,
+              type: ''
+            }
+          })
         }).value
       } else {
         const localSrc = localStorage.getItem(src)
