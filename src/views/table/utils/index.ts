@@ -1,3 +1,4 @@
+// @ts-ignore
 import Colorthief from 'colorthief'
 export const rgbToHex = (r: any, g: any, b: any): string => {
   const rHex = r.toString(16).padStart(2, '0')

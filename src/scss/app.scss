@@ -43,16 +43,18 @@ body,
     --size: 40px;
     --borderRadius: $gap * 0.5;
     --backgroundColor: transparent;
+    --padding:0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     overflow: hidden;
+    vertical-align: middle;
     width: var(--size);
     height: var(--size);
     border-radius: var(--borderRadius);
     background-color: var(--backgroundColor);
-    vertical-align: middle;
+    padding:var(--padding);
     svg {
       display: block;
       width: 60%;

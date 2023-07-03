@@ -20,12 +20,12 @@ export default defineComponent({
       default: false
     },
     size: {
-      type: Number || String,
+      type: [Number, String],
       default: 40
     },
     padding: {
-      type: Boolean,
-      default: false
+      type: [Number, String],
+      default: 0
     }
   },
   setup(props, context) {
@@ -109,6 +109,9 @@ export default defineComponent({
       '--borderRadius': '4px',
       '--size': size,
       '--backgroundColor': `rgba(${this.theme.r},${this.theme.g},${this.theme.b},0.25)`
+    }
+    if (this.padding) {
+      style['--padding'] = `${Number(this.padding)}px`
     }
     if (this.theme.content.startsWith('<svg')) {
       return h('div', {
