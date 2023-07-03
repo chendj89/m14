@@ -22,6 +22,10 @@ export default defineComponent({
     size: {
       type: Number || String,
       default: 40
+    },
+    padding: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, context) {
@@ -95,16 +99,26 @@ export default defineComponent({
         }
       })
     }
+    const style: any = {
+      '--borderRadius': '4px',
+      '--size': size,
+      '--backgroundColor': `rgba(${this.theme.r},${this.theme.g},${this.theme.b},0.25)`
+    }
     if (this.theme.content.startsWith('<svg')) {
       return h('div', {
         innerHTML: this.theme.content,
-        style: { width: size, height: size }
+        style: style
       })
     } else {
-      return h('img', {
-        src: this.theme.content,
-        style: { width: size, height: size }
-      })
+      return h(
+        'div',
+        {
+          style: style
+        },
+        h('img', {
+          src: this.theme.content
+        })
+      )
     }
   }
 })

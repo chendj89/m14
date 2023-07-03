@@ -114,26 +114,23 @@ export const getThemeByBase64 = async (base64: string): Promise<RGBColor[]> => {
       context.drawImage(image, 0, 0)
       const imageData = context.getImageData(0, 0, canvas.width, canvas.height)
       const pixelData = imageData.data
-
       const colorCounts: { [color: string]: number } = {}
       // 遍历每个像素，计算颜色出现的次数
       for (let i = 0; i < pixelData.length; i += 4) {
         const r = pixelData[i]
         const g = pixelData[i + 1]
         const b = pixelData[i + 2]
-        const color = `rgb(${r},${g},${b})`
-        // 去除白色和黑色
-        if (!['rgb(0,0,0)', 'rgb(255,255,255)'].includes(color)) {
-          colorCounts[color] = (colorCounts[color] || 0) + 1
-        }
+        const a = pixelData[i + 3]
+        const color = `rgba(${r},${g},${b},${a})`
+        colorCounts[color] = (colorCounts[color] || 0) + 1
       }
       // 找到出现次数最多的颜色
       const sortedColors = Object.keys(colorCounts).sort(
         (a, b) => colorCounts[b] - colorCounts[a]
       )
       const themes: RGBColor[] = sortedColors.map((color) => {
-        const [r, g, b] = color.match(/\d+/g)!.map(Number)
-        return { r, g, b }
+        const [r, g, b, a] = color.match(/\d+/g)!.map(Number)
+        return { r, g, b, a }
       })
       // 清内存
       canvas = null
