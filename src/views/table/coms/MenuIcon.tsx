@@ -57,13 +57,15 @@ export default defineComponent({
           theme.value = ref(oTheme).value
         }
       }
-      clearTimer()
-      loading.value.skeleton = true
-      loading.value.start = `rgba(${theme.value.r},${theme.value.g},${theme.value.b},0.2)`
-      loading.value.end = `rgba(${theme.value.r},${theme.value.g},${theme.value.b},0.5)`
-      timer = setTimeout(() => {
-        loading.value.skeleton = false
-      }, 1000)
+      if (props.skeleton) {
+        clearTimer()
+        loading.value.skeleton = true
+        loading.value.start = `rgba(${theme.value.r},${theme.value.g},${theme.value.b},0.1)`
+        loading.value.end = `rgba(${theme.value.r},${theme.value.g},${theme.value.b},0.25)`
+        timer = setTimeout(() => {
+          loading.value.skeleton = false
+        }, 1000)
+      }
     }
     const theme: any = ref({
       hex: '',
@@ -74,7 +76,7 @@ export default defineComponent({
       content: ''
     })
     const loading = ref({
-      skeleton: !!props.skeleton,
+      skeleton: false,
       start: '',
       end: ''
     })

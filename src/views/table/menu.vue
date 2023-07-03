@@ -1,7 +1,6 @@
 <template>
   <div>
     <MenuIcon
-      skeleton
       class="menuCard-item"
       src="https://avatars.githubusercontent.com/u/105529957"
     ></MenuIcon>
@@ -19,6 +18,11 @@
       skeleton
       class="menuCard-item"
       src="https://api.iconify.design/twemoji:zany-face.svg"
+    ></MenuIcon>
+    <MenuIcon
+      skeleton
+      class="menuCard-item"
+      src="https://api.iconify.design/vscode-icons:file-type-vite.svg"
     ></MenuIcon>
   </div>
 </template>
