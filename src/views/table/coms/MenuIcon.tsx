@@ -76,11 +76,10 @@ export default defineComponent({
       content: ''
     })
     const loading = ref({
-      skeleton: false,
+      skeleton: props.skeleton,
       start: '',
       end: ''
     })
-
     updateSrc(props.src)
     watch(
       () => props.src,
@@ -95,16 +94,22 @@ export default defineComponent({
   },
   render() {
     const size = typeof this.size === 'number' ? `${this.size}px` : this.size
-    if (this.loading.skeleton) {
+    if (this.loading.skeleton || !this.theme.content) {
       return h(NSkeleton, {
         sharp: false,
-        style: {
-          display: 'inline-block',
-          width: size,
-          height: size,
-          '--n-color-start': this.loading.start,
-          '--n-color-end': this.loading.end
-        }
+        style: this.loading.start
+          ? {
+              display: 'inline-block',
+              width: size,
+              height: size,
+              '--n-color-start': this.loading.start,
+              '--n-color-end': this.loading.end
+            }
+          : {
+              display: 'inline-block',
+              width: size,
+              height: size
+            }
       })
     }
     const style: any = {
