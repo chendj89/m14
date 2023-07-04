@@ -1,6 +1,14 @@
 import type { FormItem } from '../../types/components'
-import { defineComponent, h,type PropType, ref, toRef } from 'vue'
-import {  type FormProps, NForm, NFormItem, NFormItemGridItem, NGrid, useMessage, NSpin } from 'naive-ui'
+import { defineComponent, h, type PropType, ref, toRef } from 'vue'
+import {
+  type FormProps,
+  NForm,
+  NFormItem,
+  NFormItemGridItem,
+  NGrid,
+  useMessage,
+  NSpin
+} from 'naive-ui'
 
 function renderItem(formItem: FormItem) {
   return function () {
@@ -11,10 +19,10 @@ function renderItem(formItem: FormItem) {
             h(
               'span',
               {
-                class: 'ml-2 text-red-500 align-top',
+                class: 'ml-2 text-red-500 align-top'
               },
               '*'
-            ),
+            )
           ]
         : formItem.render(formItem)
     } else {
@@ -28,7 +36,7 @@ export default defineComponent({
   props: {
     formConfig: {
       type: Object as PropType<FormProps>,
-      default: () => {},
+      default: () => {}
     },
     preset: {
       type: String,
@@ -41,18 +49,18 @@ export default defineComponent({
           return false
         }
         return true
-      },
+      }
     },
     options: {
       type: Array as PropType<Array<FormItem>>,
-      require: true,
-    },
+      require: true
+    }
   },
   setup(props) {
     const dataForm = ref<typeof NForm | null>(null)
     const options = toRef(props, 'options')
     const message = useMessage()
-    const loading=ref(false)
+    const loading = ref(false)
     function reset() {
       if (!options.value) return
       options.value.forEach((it: FormItem) => {
@@ -98,54 +106,58 @@ export default defineComponent({
     if (!this.options) {
       throw new Error('prop options must be not null')
     }
-    return h(NSpin,{show:this.loading},()=>h(
-      NForm,
-      {
-        ref: 'dataForm',
-        labelPlacement: 'left',
-        size: 'medium',
-        ...this.formConfig,
-      },
-      {
-        default: () => {
-          return this.preset === 'grid-item'
-            ? h(
-                NGrid,
-                {
-                  responsive: 'screen',
-                  cols: 'xs:1 s:2 m:3 l:3 xl:4 2xl:4',
-                  xGap: 10,
-                },
-                {
-                  default: () => {
-                    return this.options?.map((it) => {
-                      return h(
-                        NFormItemGridItem,
-                        {
-                          label: it.label,
-                        },
-                        {
-                          default: renderItem(it),
-                        }
-                      )
-                    })
-                  },
-                }
-              )
-            : this.options?.map((it) => {
-                return h(
-                  NFormItem,
+    return h(NSpin, { show: this.loading }, () =>
+      h(
+        NForm,
+        {
+          ref: 'dataForm',
+          labelPlacement: 'left',
+          size: 'medium',
+          ...this.formConfig
+        },
+        {
+          default: () => {
+            return this.preset === 'grid-item'
+              ? h(
+                  NGrid,
                   {
-                    label: it.label,
-                    path: it.path || (it.key as string),
+                    responsive: 'screen',
+                    cols: 'xs:1 s:2 m:3 l:3 xl:4 2xl:4',
+                    xGap: 10
                   },
                   {
-                    default: renderItem(it),
+                    default: () => {
+                      return this.options?.map((it) => {
+                        return h(
+                          NFormItemGridItem,
+                          {
+                            label: it.label,
+                            ...it.itemOptions
+                          },
+                          {
+                            default: renderItem(it)
+                          }
+                        )
+                      })
+                    }
                   }
                 )
-              })
-        },
-      }
-    )) 
-  },
+              : this.options?.map((it) => {
+                  return h(
+                    NFormItem,
+                    {
+                      label: it.label,
+                      path: it.path || (it.key as string),
+                      ...it.itemOptions
+                    },
+                    {
+                      default: renderItem(it)
+                    }
+                  )
+                })
+          }
+        }
+      )
+    )
+  }
 })

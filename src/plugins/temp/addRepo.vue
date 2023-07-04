@@ -1,16 +1,11 @@
 <template>
   <div class="temp">
-    <div class="temp-upload"></div>
-    <div>
-      <div>仓库名</div>
-      <input type="text">
-    </div>
+    <Form2></Form2>
   </div>
 </template>
 
-<script setup lang="ts" name="AddRepo"></script>
+<script setup lang="ts" name="AddRepo">
+import Form2 from './form'
+</script>
 
-<style lang="scss" scoped>
-
-
-</style>
+<style lang="scss" scoped></style>

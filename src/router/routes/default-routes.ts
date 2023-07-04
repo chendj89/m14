@@ -1,4 +1,4 @@
-import { LAYOUT } from "@/store/keys";
+import { LAYOUT } from '@/store/keys'
 export default [
   {
     path: '/index',
@@ -66,6 +66,18 @@ export default [
         component: () => import('@/views/table/menu.vue'),
         meta: {
           title: '菜单',
+          affix: true,
+          cacheable: true,
+          iconPrefix: 'icon',
+          icon: 'menu'
+        }
+      },
+      {
+        path: 'addTable',
+        name: 'AddTable',
+        component: () => import('@/views/table/addTable.vue'),
+        meta: {
+          title: '仓库',
           affix: true,
           cacheable: true,
           iconPrefix: 'icon',

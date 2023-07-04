@@ -43,6 +43,7 @@ export interface FormItem extends TableSearchItem {
   path?: string;
   reset?: (formItem: FormItem) => void;
   render?: (formItem: FormItem) => VNode;
+  itemOptions?:any
 }
 
 export interface LikeSearchModel {

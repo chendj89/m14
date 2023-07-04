@@ -8,7 +8,7 @@ import {
 } from 'vue'
 import type { UsePluginDialog } from '@/types/plugins'
 import { drag, unDrag } from '@/hooks/useDialogDragger'
-import { NIcon } from 'naive-ui'
+import { NIcon, NMessageProvider } from 'naive-ui'
 import './index.scss'
 import { NBaseClose } from 'naive-ui/es/_internal/close'
 const dialog = defineComponent({
@@ -42,37 +42,44 @@ const dialog = defineComponent({
         to: 'body'
       },
       h(
-        'div',
+        NMessageProvider,
+        {},
         {
-          class: 'usePluginDialog',
-          style: 'z-index:99;left:100px;top:100px'
-        },
-        [
-          h(
-            'div',
-            {
-              class: 'usePluginDialog-content'
-            },
-            [
-              h('div', { class: 'usePluginDialog-header' }, [
-                h('div', {}, this.$props.title),
-                h('div', {
-                  class: 'usePluginDialog-header-drag',
-                  ref: 'headerRef'
-                }),
-                h(NBaseClose, {
-                  clsPrefix: 'n',
-                  onClick: () => this.$props.onClose()
-                })
-              ]),
-              h(
-                'div',
-                { class: 'usePluginDialog-body' },
-                this.$slots.default?.()
-              )
-            ]
-          )
-        ]
+          default: () =>
+            h(
+              'div',
+              {
+                class: 'usePluginDialog',
+                style: 'z-index:1000;left:100px;top:100px'
+              },
+              [
+                h(
+                  'div',
+                  {
+                    class: 'usePluginDialog-content'
+                  },
+                  [
+                    h('div', { class: 'usePluginDialog-header' }, [
+                      h('div', {}, this.$props.title),
+                      h('div', {
+                        class: 'usePluginDialog-header-drag',
+                        ref: 'headerRef'
+                      }),
+                      h(NBaseClose, {
+                        clsPrefix: 'n',
+                        onClick: () => this.$props.onClose()
+                      })
+                    ]),
+                    h(
+                      'div',
+                      { class: 'usePluginDialog-body' },
+                      this.$slots.default?.()
+                    )
+                  ]
+                )
+              ]
+            )
+        }
       )
     )
   }

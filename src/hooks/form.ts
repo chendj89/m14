@@ -44,6 +44,7 @@ export function renderInput(
   options: InputProps | AllowedComponentProps = {},
   slots: any = null
 ) {
+  console.log('renderInput-options',options)
   return h(
     NInput,
     {
