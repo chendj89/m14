@@ -26,36 +26,36 @@ import {
   type TagProps,
   type TimePickerProps,
   type TreeSelectProps,
-  NCascader,
-} from "naive-ui";
-import type { Value as DatePickerValue } from "naive-ui/lib/date-picker/src/interface";
+  NCascader
+} from 'naive-ui'
+import type { Value as DatePickerValue } from 'naive-ui/lib/date-picker/src/interface'
 import type {
   SelectGroupOption,
-  Value as SelectValue,
-} from "naive-ui/lib/select/src/interface";
+  Value as SelectValue
+} from 'naive-ui/lib/select/src/interface'
 import type {
   TreeSelectOption,
-  Value,
-} from "naive-ui/lib/tree-select/src/interface";
-import { type AllowedComponentProps, createVNode, h, type Ref } from "vue";
+  Value
+} from 'naive-ui/lib/tree-select/src/interface'
+import { type AllowedComponentProps, createVNode, h, type Ref } from 'vue'
 
 export function renderInput(
   value: Ref<string>,
   options: InputProps | AllowedComponentProps = {},
   slots: any = null
 ) {
-  console.log('renderInput-options',options)
+  console.log('renderInput-options', options)
   return h(
     NInput,
     {
       value: value.value,
       onUpdateValue: (newVal: string) => {
-        value.value = newVal;
+        value.value = newVal
       },
-      ...options,
+      ...options
     },
     slots
-  );
+  )
 }
 
 export function renderRadioButtonGroup(
@@ -69,8 +69,8 @@ export function renderRadioButtonGroup(
       value: value.value,
       ...optionProps,
       onUpdateValue: (newVal: string | number | null | undefined) => {
-        value.value = newVal;
-      },
+        value.value = newVal
+      }
     },
     {
       default: () => {
@@ -78,16 +78,16 @@ export function renderRadioButtonGroup(
           return createVNode(
             NRadioButton,
             {
-              ...it,
+              ...it
             },
             {
-              default: () => it.label,
+              default: () => it.label
             }
-          );
-        });
-      },
+          )
+        })
+      }
     }
-  );
+  )
 }
 
 export function renderCheckbox(
@@ -100,14 +100,14 @@ export function renderCheckbox(
     {
       checked: value.value,
       onUpdateChecked: (newVal: boolean) => {
-        value.value = newVal;
+        value.value = newVal
       },
-      ...options,
+      ...options
     },
     {
-      default: () => label,
+      default: () => label
     }
-  );
+  )
 }
 
 export function renderTag(
@@ -115,8 +115,8 @@ export function renderTag(
   options: TagProps | AllowedComponentProps = {}
 ) {
   return h(NTag, options, {
-    default: () => label,
-  });
+    default: () => label
+  })
 }
 
 export function renderCheckboxGroup(
@@ -129,31 +129,31 @@ export function renderCheckboxGroup(
     {
       value: value.value,
       onUpdateValue: (newVal) => {
-        value.value = newVal;
+        value.value = newVal
       },
-      ...optionProps,
+      ...optionProps
     },
     {
       default: () => {
         return h(
           NSpace,
           {
-            itemStyle: "diaplay: flex",
+            itemStyle: 'diaplay: flex'
           },
           {
             default: () => {
               return options.map((it) => {
                 return h(NCheckbox, {
                   value: it.value,
-                  label: it.label,
-                });
-              });
-            },
+                  label: it.label
+                })
+              })
+            }
           }
-        );
-      },
+        )
+      }
     }
-  );
+  )
 }
 
 export function renderSelect(
@@ -166,9 +166,9 @@ export function renderSelect(
     value: value.value,
     ...optionProps,
     onUpdateValue: (newVal: any) => {
-      value.value = newVal;
-    },
-  });
+      value.value = newVal
+    }
+  })
 }
 
 export function renderTreeSelect(
@@ -180,10 +180,10 @@ export function renderTreeSelect(
     value: value.value,
     options,
     onUpdateValue: (newVal) => {
-      value.value = newVal;
+      value.value = newVal
     },
-    ...optionProps,
-  });
+    ...optionProps
+  })
 }
 
 export function renderSwitch(
@@ -193,10 +193,10 @@ export function renderSwitch(
   return h(NSwitch, {
     value: value.value,
     onUpdateValue: (newVal: boolean) => {
-      value.value = newVal;
+      value.value = newVal
     },
-    ...options,
-  });
+    ...options
+  })
 }
 
 export function renderDatePicker(
@@ -206,10 +206,10 @@ export function renderDatePicker(
   return h(NDatePicker, {
     value: value.value,
     onUpdateValue: (newVal: any) => {
-      value.value = newVal;
+      value.value = newVal
     },
-    ...options,
-  });
+    ...options
+  })
 }
 
 export function renderTimePicker(
@@ -219,10 +219,10 @@ export function renderTimePicker(
   return h(NTimePicker, {
     value: value.value,
     onUpdateValue: (newVal: number | null) => {
-      value.value = newVal;
+      value.value = newVal
     },
-    ...options,
-  });
+    ...options
+  })
 }
 
 export function renderPopSelect(
@@ -237,17 +237,17 @@ export function renderPopSelect(
       onUpdateValue: (
         newVal: string | number | Array<string | number> | null
       ) => {
-        value.value = newVal;
+        value.value = newVal
       },
       options,
-      ...optionProps,
+      ...optionProps
     },
     {
       default: () => {
         return createVNode(NButton, null, {
-          default: () => value.value || "请选择",
-        });
-      },
+          default: () => value.value || '请选择'
+        })
+      }
     }
-  );
+  )
 }
