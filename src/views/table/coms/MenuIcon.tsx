@@ -31,6 +31,9 @@ export default defineComponent({
     onMouseenter: {
       type: Function
     },
+    clickHandle: {
+      type: Function
+    },
     href: {
       type: String,
       default: ''
@@ -101,6 +104,7 @@ export default defineComponent({
     }
     const onClick = () => {
       if (props.href) {
+        props.clickHandle?.()
         window.open(props.href)
       }
     }

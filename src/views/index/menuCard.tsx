@@ -18,12 +18,14 @@ export default defineComponent({
     }
     const content: any = ref(defaultContent)
     let id: any = null
+    const stop = ref(false)
     const getMsg = (params: any) => {
       if (id !== params.id) {
         content.value = params.render
       }
     }
     const onMouseenter = (config: any) => {
+      stop.value = false
       const list: any = props.info?.find((item: any) => {
         return item.icon == config.src
       })
@@ -37,20 +39,28 @@ export default defineComponent({
           list?.children?.map((child: any) =>
             h(MenuIcon, {
               src: child.icon,
-              href: child.url
+              href: child.url,
+              clickHandle: clickHandle
             })
           )
         )
     }
     const onMouseleaver = () => {
-      content.value = defaultContent
-      id = null
+      if (!stop.value) {
+        content.value = defaultContent
+        id = null
+      }
+    }
+    const clickHandle = () => {
+      stop.value = true
     }
     return {
+      stop,
       getMsg,
       content,
       onMouseenter,
-      onMouseleaver
+      onMouseleaver,
+      clickHandle
     }
   },
   render() {
@@ -73,7 +83,8 @@ export default defineComponent({
                   skeleton: true,
                   src: item.icon,
                   onMouseenter: this.onMouseenter,
-                  href: item.url
+                  href: item.url,
+                  clickHandle: this.clickHandle
                 })
               )
           )
