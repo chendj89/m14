@@ -5,7 +5,6 @@ import {
   createImageTheme
 } from '@/views/table/utils'
 import { NButton, NSkeleton } from 'naive-ui'
-import './menuIcon.scss'
 export default defineComponent({
   name: 'MenuIcon',
   props: {
@@ -27,13 +26,6 @@ export default defineComponent({
     padding: {
       type: [Number, String],
       default: 0
-    },
-    onMouseenter: {
-      type: Function
-    },
-    href: {
-      type: String,
-      default: ''
     }
   },
   setup(props) {
@@ -95,20 +87,9 @@ export default defineComponent({
         updateSrc(newSrc)
       }
     )
-
-    const onMouseleaver = () => {
-      return theme
-    }
-    const onClick = () => {
-      if (props.href) {
-        window.open(props.href)
-      }
-    }
     return {
       theme,
-      loading,
-      onMouseleaver,
-      onClick
+      loading
     }
   },
   render() {
@@ -131,60 +112,66 @@ export default defineComponent({
             }
       })
     }
-    const buttonStyle = {
-      '--n-padding': 0,
-      '--n-width': size,
-      '--n-height': size
+    const style: any = {
+      '--borderRadius': '4px',
+      '--size': size,
+      '--backgroundColor': `rgba(${this.theme.r},${this.theme.g},${this.theme.b},0.25)`
     }
-    const rgba = `rgba(${this.theme.r},${this.theme.g},${this.theme.b},0.25)`
+    if (this.padding) {
+      style['--padding'] = `${Number(this.padding)}px`
+    }
     const rgb = `rgb(${this.theme.r},${this.theme.g},${this.theme.b})`
     if (this.theme.content.startsWith('<svg')) {
       return h(
         NButton,
         {
-          onClick: this.onClick,
-          class: 'menuIcon',
-          color: rgba,
-          style: buttonStyle,
-          onMouseenter: () =>
-            this.onMouseenter?.({
-              theme: this.theme,
-              src: this.src
-            })
+          ghost:true,
+          style: `--n-width: 40px;--n-color: rgba(${this.theme.r},${this.theme.g},${this.theme.b},0.25);--n-padding: 0;--n-height:40px;--n-border-radius:4px;--n-ripple-color:${rgb}`
         },
         {
           default: () =>
             h('div', {
-              innerHTML: this.theme.content,
-              class: 'menuIcon-content menuIcon-svg'
+              class: 'menuCard-item',
+              style: `width:40px;height:40px;border-radius:var(--n-border-radius);overflow: hidden;
+              `,
+              innerHTML: this.theme.content
             })
         }
       )
+
+      return h('div', {
+        innerHTML: this.theme.content,
+        style: { ...style, width: size, height: size }
+      })
     } else {
       return h(
         NButton,
         {
-          class: 'menuIcon',
-          color: rgb,
-          style: buttonStyle,
-          onMouseenter: () =>
-            this.onMouseenter?.({
-              theme: this.theme,
-              src: this.src
-            })
+          color: `rgb(${this.theme.r},${this.theme.g},${this.theme.b})`,
+          style: `--n-width: 40px; --n-padding: 0;--n-height:40px;--n-border-radius:4px;--n-ripple-color:${rgb}`
         },
         {
           default: () =>
             h(
               'div',
               {
-                class: 'menuIcon-content menuIcon-img'
+                style: `width:100%;height:100%;border-radius:var(--n-border-radius);overflow: hidden;`
               },
               h('img', {
-                src: this.theme.content
+                src: this.theme.content,
+                style: `width:100%;height:100%;display: block;`
               })
             )
         }
+      )
+      return h(
+        'div',
+        {
+          style: style
+        },
+        h('img', {
+          src: this.theme.content
+        })
       )
     }
   }
