@@ -164,6 +164,7 @@ export default defineComponent({
       return h(
         NButton,
         {
+          onClick: this.onClick,
           class: 'menuIcon',
           color: rgb,
           style: buttonStyle,
