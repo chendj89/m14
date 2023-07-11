@@ -37,6 +37,9 @@ export default defineComponent({
     href: {
       type: String,
       default: ''
+    },
+    children: {
+      type: Array
     }
   },
   setup(props) {
@@ -108,11 +111,22 @@ export default defineComponent({
         window.open(props.href)
       }
     }
+    const renderChildren = () => {
+      return h(
+        'div',
+        {},
+        props.children?.map((item) => {
+          return h(MenuIcon)
+        })
+      )
+    }
+    const onHover = () => {}
     return {
       theme,
       loading,
       onMouseleaver,
-      onClick
+      onClick,
+      onHover
     }
   },
   render() {
