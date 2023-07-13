@@ -6,7 +6,7 @@ import {
 } from '@/views/table/utils'
 import { NButton, NSkeleton } from 'naive-ui'
 import './menuIcon.scss'
-export default defineComponent({
+const MenuIcon = defineComponent({
   name: 'MenuIcon',
   props: {
     /**
@@ -28,9 +28,6 @@ export default defineComponent({
       type: [Number, String],
       default: 0
     },
-    onMouseenter: {
-      type: Function
-    },
     clickHandle: {
       type: Function
     },
@@ -42,7 +39,7 @@ export default defineComponent({
       type: Array
     }
   },
-  setup(props) {
+  setup(props, context) {
     let timer: any = null
     const clearTimer = () => {
       if (timer) {
@@ -108,25 +105,37 @@ export default defineComponent({
     const onClick = () => {
       if (props.href) {
         props.clickHandle?.()
-        window.open(props.href)
+        setTimeout(() => {
+          window.open(props.href)
+        }, 300);
       }
     }
     const renderChildren = () => {
       return h(
         'div',
-        {},
-        props.children?.map((item) => {
-          return h(MenuIcon)
-        })
+        {
+          class: 'menuCard-banner-content',
+          style: `background:rgba(${theme.value.r},${theme.value.g},${theme.value.b},0.25)`
+        },
+        [
+          props.children?.map((item: any) => {
+            return h(MenuIcon, {
+              src: item.icon,
+              href: item.url
+            })
+          })
+        ]
       )
     }
-    const onHover = () => {}
+    const onMouseenter = () => {
+      context.emit('content', renderChildren)
+    }
     return {
       theme,
       loading,
+      onMouseenter,
       onMouseleaver,
-      onClick,
-      onHover
+      onClick
     }
   },
   render() {
@@ -164,11 +173,7 @@ export default defineComponent({
           class: 'menuIcon',
           color: rgba,
           style: buttonStyle,
-          onMouseenter: () =>
-            this.onMouseenter?.({
-              theme: this.theme,
-              src: this.src
-            })
+          onMouseenter: this.onMouseenter
         },
         {
           default: () =>
@@ -186,11 +191,7 @@ export default defineComponent({
           class: 'menuIcon',
           color: rgb,
           style: buttonStyle,
-          onMouseenter: () =>
-            this.onMouseenter?.({
-              theme: this.theme,
-              src: this.src
-            })
+          onMouseenter: this.onMouseenter
         },
         {
           default: () =>
@@ -208,3 +209,4 @@ export default defineComponent({
     }
   }
 })
+export default MenuIcon

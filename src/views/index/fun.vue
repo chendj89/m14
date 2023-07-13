@@ -37,7 +37,7 @@ const list = ref([
     children: [
       {
         name: 'pinia',
-        icon: 'https://api.iconify.design/line-md:image-twotone.svg?color=%231a7f37',
+        icon: 'https://api.iconify.design/logos:github-icon.svg?color=%23000000',
         url: 'https://pinia.vuejs.org/zh/'
       },
       {

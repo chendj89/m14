@@ -24,26 +24,8 @@ export default defineComponent({
         content.value = params.render
       }
     }
-    const onMouseenter = (config: any) => {
-      stop.value = false
-      const list: any = props.info?.find((item: any) => {
-        return item.icon == config.src
-      })
-      content.value = () =>
-        h(
-          'div',
-          {
-            class: 'menuCard-banner-content',
-            style: `background:rgba(${config.theme.r},${config.theme.g},${config.theme.b},0.25)`
-          },
-          list?.children?.map((child: any) =>
-            h(MenuIcon, {
-              src: child.icon,
-              href: child.url,
-              clickHandle: clickHandle
-            })
-          )
-        )
+    const onContent = (render: Function) => {
+      content.value = render
     }
     const onMouseleaver = () => {
       if (!stop.value) {
@@ -58,7 +40,7 @@ export default defineComponent({
       stop,
       getMsg,
       content,
-      onMouseenter,
+      onContent,
       onMouseleaver,
       clickHandle
     }
@@ -75,16 +57,17 @@ export default defineComponent({
           h(
             NSpace,
             {
-              style: `gap:8px`
+              style: `gap:8px;line-height:0`,
             },
             () =>
               this.info?.map((item: any) =>
                 h(MenuIcon, {
                   skeleton: true,
                   src: item.icon,
-                  onMouseenter: this.onMouseenter,
+                  onContent: this.onContent,
                   href: item.url,
-                  clickHandle: this.clickHandle
+                  children: item.children,
+                  clickHandle:this.clickHandle
                 })
               )
           )
