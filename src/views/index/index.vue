@@ -1,12 +1,12 @@
 <template>
   <div>
-    <n-button type="primary">添加路由</n-button>
-    <n-button @click="addRoute">虚拟节点1</n-button>
+    <Grid></Grid>
   </div>
 </template>
 <script lang="ts" setup name="Index">
 import loadVirtual from '@/virtual'
 import { useRouter } from 'vue-router'
+import Grid from '@/components/grid'
 const router = useRouter()
 /**
  * 添加动态路由
