@@ -54,10 +54,10 @@ export const createEle = (params: any, props: any) => {
     ele.parentNode?.removeChild(ele)
   })
   // 移动
-  const moveEle = document.createElement('div')
-  moveEle.className = 'grid-move'
-  moveEle.style.display = 'none'
-  ele.append(moveEle, closeEle, resizeEle)
+  // const moveEle = document.createElement('div')
+  // moveEle.className = 'grid-move'
+  // moveEle.style.display = 'none'
+  ele.append(closeEle, resizeEle)
   return ele
 }
 
@@ -163,7 +163,7 @@ export const handler = (grid: any, props: any) => {
         if (difX + rect.width > props.width) {
           difX = props.width - rect.width
         }
-        if(difY+rect.height>props.height){
+        if (difY + rect.height > props.height) {
           difY = props.height - rect.height
         }
         if (difX < 0) {

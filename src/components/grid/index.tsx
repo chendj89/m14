@@ -38,7 +38,7 @@ export default defineComponent({
       <div
         ref="gridRef"
         class="grid"
-        style={{ width: this.width + 'px', height: this.height + 'px' }}
+        style={{ width: this.width + 'px', height: this.height + 'px','--size':this.size*2+'px' }}
       ></div>
     )
   }
