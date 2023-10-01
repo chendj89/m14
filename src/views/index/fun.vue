@@ -1,25 +1,5 @@
 <template>
   <div class="grid">
-    <!-- <div class="menu" v-for="item in [0]" :key="item">
-      <div class="menu-banner"></div>
-      <div class="menu-content" v-if="abc">
-        <n-space style="gap: 8px 8px">
-          <div class="menu-item">
-            <img
-              class="menu-item-icon"
-              src="https://api.iconify.design/logos:vue.svg?color=%2310b981"
-              alt=""
-              id="img1"
-            />
-          </div>
-          <n-skeleton :sharp="false" :width="40" :height="40"></n-skeleton>
-          <n-skeleton :sharp="false" :width="40" :height="40"></n-skeleton>
-          <n-skeleton :sharp="false" :width="40" :height="40"></n-skeleton>
-          <n-skeleton :sharp="false" :width="40" :height="40"></n-skeleton>
-          <n-skeleton :sharp="false" :width="40" :height="40"></n-skeleton>
-        </n-space>
-      </div>
-    </div> -->
     <MenuCard :info="list"></MenuCard>
   </div>
 </template>
@@ -27,47 +7,47 @@
 <script setup lang="ts" name="Fun">
 import MenuCard from './menuCard'
 
-const list=ref([
+const list = ref([
   {
-    name:"vue",
-    icon:"https://api.iconify.design/logos:vue.svg?color=%2310b981",
-    url:"https://cn.vuejs.org/",
-    children:[
+    name: 'vue',
+    icon: 'https://api.iconify.design/logos:vue.svg?color=%2310b981',
+    url: 'https://cn.vuejs.org/',
+    children: [
       {
-        name:'pinia',
-        icon:'https://pinia.vuejs.org/logo.svg',
-        url:'https://pinia.vuejs.org/zh/'
+        name: 'pinia',
+        icon: 'https://www.naiveui.com/assets/naivelogo-93278402.svg',
+        url: 'https://pinia.vuejs.org/zh/'
+      },
+      {
+        name: 'pinia',
+        icon: 'https://avatars.githubusercontent.com/u/105529957',
+        url: 'https://pinia.vuejs.org/zh/'
+      },
+      {
+        name: 'pinia',
+        icon: 'https://api.iconify.design/twemoji:zany-face.svg',
+        url: 'https://pinia.vuejs.org/zh/'
       }
     ]
   },
   {
-    name:"vite",
-    icon:"https://api.iconify.design/vscode-icons:file-type-vite.svg",
-    url:"https://cn.vitejs.dev/",
+    name: 'vite',
+    icon: 'https://api.iconify.design/vscode-icons:file-type-vite.svg',
+    url: 'https://cn.vitejs.dev/',
+    children: [
+      {
+        name: 'pinia',
+        icon: 'https://api.iconify.design/logos:github-icon.svg?color=%23000000',
+        url: 'https://pinia.vuejs.org/zh/'
+      },
+      {
+        name: 'pinia',
+        icon: 'https://p11.douyinpic.com/aweme/200x200/aweme-avatar/tos-cn-avt-0015_359f46e359567d7bc0cfd279cd2d376f',
+        url: 'https://www.douyin.com/user/MS4wLjABAAAAvRTJJLAhIKm_WHqpmpc4iG4w_JbWcxobGdAiMfP5zJPms_cSusbsSD0e0m3ZbPn0?is_search=0&list_name=follow&nt=1'
+      }
+    ]
   }
 ])
-// import ColorThief from 'colorthief'
-// const abc = ref(false)
-
-// fetch('https://api.iconify.design/logos:vue.svg?color=%2310b981')
-//   .then((res) => res.blob())
-//   .then((blob) => {
-//     console.log('blob', blob)
-//     if (blob.type == 'image/svg+xml') {
-//       let reader: any = new FileReader()
-//       reader.readAsText(blob, 'utf-8')
-//       reader.onload = function () {
-//         console.log(reader.result)
-//         let img=new Image()
-//         img.src=`data:image/svg+xml;base64,${window.btoa(
-//           unescape(encodeURIComponent(reader.result))
-//         )}`
-//         let color=new ColorThief()
-//         // #44bb84
-//         console.log(color.getPalette(img))
-//       }
-//     }
-//   })
 </script>
 
 <style lang="scss" scoped>

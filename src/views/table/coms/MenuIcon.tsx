@@ -4,8 +4,9 @@ import {
   saveSrc,
   createImageTheme
 } from '@/views/table/utils'
-import { NSkeleton } from 'naive-ui'
-export default defineComponent({
+import { NButton, NSkeleton } from 'naive-ui'
+import './menuIcon.scss'
+const MenuIcon = defineComponent({
   name: 'MenuIcon',
   props: {
     /**
@@ -26,6 +27,16 @@ export default defineComponent({
     padding: {
       type: [Number, String],
       default: 0
+    },
+    clickHandle: {
+      type: Function
+    },
+    href: {
+      type: String,
+      default: ''
+    },
+    children: {
+      type: Array
     }
   },
   setup(props, context) {
@@ -87,9 +98,44 @@ export default defineComponent({
         updateSrc(newSrc)
       }
     )
+
+    const onMouseleaver = () => {
+      return theme
+    }
+    const onClick = () => {
+      if (props.href) {
+        props.clickHandle?.()
+        setTimeout(() => {
+          window.open(props.href)
+        }, 300);
+      }
+    }
+    const renderChildren = () => {
+      return h(
+        'div',
+        {
+          class: 'menuCard-banner-content',
+          style: `background:rgba(${theme.value.r},${theme.value.g},${theme.value.b},0.25)`
+        },
+        [
+          props.children?.map((item: any) => {
+            return h(MenuIcon, {
+              src: item.icon,
+              href: item.url
+            })
+          })
+        ]
+      )
+    }
+    const onMouseenter = () => {
+      context.emit('content', renderChildren)
+    }
     return {
       theme,
-      loading
+      loading,
+      onMouseenter,
+      onMouseleaver,
+      onClick
     }
   },
   render() {
@@ -112,29 +158,55 @@ export default defineComponent({
             }
       })
     }
-    const style: any = {
-      '--borderRadius': '4px',
-      '--size': size,
-      '--backgroundColor': `rgba(${this.theme.r},${this.theme.g},${this.theme.b},0.25)`
+    const buttonStyle = {
+      '--n-padding': 0,
+      '--n-width': size,
+      '--n-height': size
     }
-    if (this.padding) {
-      style['--padding'] = `${Number(this.padding)}px`
-    }
+    const rgba = `rgba(${this.theme.r},${this.theme.g},${this.theme.b},0.25)`
+    const rgb = `rgb(${this.theme.r},${this.theme.g},${this.theme.b})`
     if (this.theme.content.startsWith('<svg')) {
-      return h('div', {
-        innerHTML: this.theme.content,
-        style: style
-      })
+      return h(
+        NButton,
+        {
+          onClick: this.onClick,
+          class: 'menuIcon',
+          color: rgba,
+          style: buttonStyle,
+          onMouseenter: this.onMouseenter
+        },
+        {
+          default: () =>
+            h('div', {
+              innerHTML: this.theme.content,
+              class: 'menuIcon-content menuIcon-svg'
+            })
+        }
+      )
     } else {
       return h(
-        'div',
+        NButton,
         {
-          style: style
+          onClick: this.onClick,
+          class: 'menuIcon',
+          color: rgb,
+          style: buttonStyle,
+          onMouseenter: this.onMouseenter
         },
-        h('img', {
-          src: this.theme.content
-        })
+        {
+          default: () =>
+            h(
+              'div',
+              {
+                class: 'menuIcon-content menuIcon-img'
+              },
+              h('img', {
+                src: this.theme.content
+              })
+            )
+        }
       )
     }
   }
 })
+export default MenuIcon
