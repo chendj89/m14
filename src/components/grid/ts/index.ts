@@ -34,7 +34,7 @@ export const createEle = (params: any, props: any) => {
   ele.style.backgroundColor = 'rgba(0, 0, 0, 0.8)'
   ele.style.borderRadius = '5px'
   ele.style.zIndex = '1'
-
+  ele.style.padding = props.pd+'px'
   if (params.left !== undefined) {
     ele.style.left = params.left + 'px'
   }

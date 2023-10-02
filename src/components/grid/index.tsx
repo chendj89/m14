@@ -22,6 +22,10 @@ export default defineComponent({
     bg: {
       type: String,
       default: () => 'rgba(0, 0, 0, 0.8)'
+    },
+    pd:{
+      type: Number,
+      default: () => 10
     }
   },
   setup(props) {
