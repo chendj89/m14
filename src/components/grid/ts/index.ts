@@ -28,8 +28,11 @@ const dragover = (event: MouseEvent) => {
 }
 const drop = (event: MouseEvent) => {
   event.preventDefault()
-  let btn=event.dataTransfer.getData('btn')
-  event.target.append(btn)
+  const img=document.createElement("img")
+  img.src='https://avatars.githubusercontent.com/u/105529957'
+  img.style.width='36px'
+  img.style.height='36px'
+  event.target.append(img)
 }
 
 export const createEle = (params: any, props: any) => {
@@ -216,6 +219,7 @@ export const handler = (grid: any, props: any) => {
       initX = Math.floor((event.pageX - rect.left) / props.size) * props.size
       initY = Math.floor((event.pageY - rect.top) / props.size) * props.size
       target = createEle({ left: initX, top: initY }, props)
+      target.style.zIndex='2'
       event.target.append(target)
       document.addEventListener('mousemove', mousemove)
       document.addEventListener('mouseup', mouseup)
@@ -226,6 +230,7 @@ export const handler = (grid: any, props: any) => {
       rect = target.getBoundingClientRect()
       left = parseInt(target.style.left)
       top = parseInt(target.style.top)
+      target.style.zIndex='2'
       document.addEventListener('mousemove', mousemove)
       document.addEventListener('mouseup', mouseup)
     }
@@ -237,6 +242,7 @@ export const handler = (grid: any, props: any) => {
       top = parseInt(target.style.top)
       initX = event.pageX
       initY = event.pageY
+      target.style.zIndex='2'
       document.addEventListener('mousemove', mousemove)
       document.addEventListener('mouseup', mouseup)
     }
@@ -248,6 +254,7 @@ export const handler = (grid: any, props: any) => {
       top = parseInt(target.style.top)
       initX = event.pageX
       initY = event.pageY
+      target.style.zIndex='2'
       document.addEventListener('mousemove', mousemove)
       document.addEventListener('mouseup', mouseup)
     }
