@@ -1,5 +1,6 @@
 import { handler } from './ts'
-import "./index.scss"
+import './index.scss'
+import { NButton } from 'naive-ui'
 export default defineComponent({
   name: 'Grid',
   props: {
@@ -23,18 +24,21 @@ export default defineComponent({
       type: String,
       default: () => 'rgba(0, 0, 0, 0.8)'
     },
-    pd:{
+    pd: {
       type: Number,
       default: () => 10
     }
   },
   setup(props) {
     const gridRef = ref()
+    const list = ref([h(NButton, {type:'primary'}, ()=>'123')])
     onMounted(() => {
-      handler(gridRef.value, props)
+      handler(gridRef.value, props,list)
     })
+
     return {
-      gridRef
+      gridRef,
+      list
     }
   },
   render() {
@@ -42,8 +46,14 @@ export default defineComponent({
       <div
         ref="gridRef"
         class="grid"
-        style={{ width: this.width + 'px', height: this.height + 'px','--size':this.size*2+'px' }}
-      ></div>
+        style={{
+          width: this.width + 'px',
+          height: this.height + 'px',
+          '--size': this.size * 2 + 'px'
+        }}
+      >
+        {this.list.map((item) => h(item))}
+      </div>
     )
   }
 })

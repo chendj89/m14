@@ -1,6 +1,6 @@
 .grid {
   position: relative;
-  
+
   background-image: linear-gradient(
       0deg,
       transparent 49%,
@@ -71,5 +71,11 @@
       color: #eee;
       pointer-events: none;
     }
+  }
+  &-content {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    overflow-y: auto;
   }
 }

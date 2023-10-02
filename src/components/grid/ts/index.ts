@@ -23,6 +23,15 @@ export const collision = (ele: any, props: any) => {
   return has
 }
 
+const dragover = (event: MouseEvent) => {
+  event.preventDefault()
+}
+const drop = (event: MouseEvent) => {
+  event.preventDefault()
+  let btn=event.dataTransfer.getData('btn')
+  event.target.append(btn)
+}
+
 export const createEle = (params: any, props: any) => {
   const ele: HTMLDivElement = document.createElement('div')
   ele.className = 'grid-ele'
@@ -34,7 +43,7 @@ export const createEle = (params: any, props: any) => {
   ele.style.backgroundColor = 'rgba(0, 0, 0, 0.8)'
   ele.style.borderRadius = '5px'
   ele.style.zIndex = '1'
-  ele.style.padding = props.pd+'px'
+  ele.style.padding = props.pd + 'px'
   if (params.left !== undefined) {
     ele.style.left = params.left + 'px'
   }
@@ -54,10 +63,14 @@ export const createEle = (params: any, props: any) => {
     ele.parentNode?.removeChild(ele)
   })
   // 移动
-  // const moveEle = document.createElement('div')
-  // moveEle.className = 'grid-move'
-  // moveEle.style.display = 'none'
-  ele.append(closeEle, resizeEle)
+  const contentEle = document.createElement('div')
+  contentEle.className = 'grid-content'
+  contentEle.setAttribute('display', 'flex')
+  contentEle.style.display = 'none'
+  ele.append(closeEle, resizeEle, contentEle)
+  // 添加拖拽
+  contentEle.addEventListener('drop', drop)
+  contentEle.addEventListener('dragover', dragover)
   return ele
 }
 
@@ -83,34 +96,8 @@ export const handler = (grid: any, props: any) => {
     target = null
   }
   document.addEventListener('mousedown', (event: any) => {
-    event.preventDefault()
+    // event.preventDefault()
     const classList = Array.from(event.target.classList)
-    if (event.target == grid) {
-      rect = grid.getBoundingClientRect()
-      type = 'create'
-      // 获得相对于父类的相对坐标
-      initX = Math.floor((event.pageX - rect.left) / props.size) * props.size
-      initY = Math.floor((event.pageY - rect.top) / props.size) * props.size
-      target = createEle({ left: initX, top: initY }, props)
-      event.target.append(target)
-    }
-    if (classList.includes('grid-resize')) {
-      type = 'resize'
-      target = event.target.parentNode
-      rect = target.getBoundingClientRect()
-      left = parseInt(target.style.left)
-      top = parseInt(target.style.top)
-    }
-    if (classList.includes('grid-ele')) {
-      type = 'move'
-      target = event.target
-      rect = target.getBoundingClientRect()
-      left = parseInt(target.style.left)
-      top = parseInt(target.style.top)
-      initX = event.pageX
-      initY = event.pageY
-    }
-
     /**
      * 鼠标移动
      * @param event
@@ -193,7 +180,7 @@ export const handler = (grid: any, props: any) => {
         } else {
           if (target.children) {
             Array.from(target.children).forEach((child: any) => {
-              child.style.display = 'block'
+              child.style.display = child.getAttribute('display') || 'block'
             })
           }
         }
@@ -222,7 +209,36 @@ export const handler = (grid: any, props: any) => {
       document.removeEventListener('mousemove', mousemove)
       document.removeEventListener('mouseup', mouseup)
     }
-    document.addEventListener('mousemove', mousemove)
-    document.addEventListener('mouseup', mouseup)
+    if (event.target == grid) {
+      rect = grid.getBoundingClientRect()
+      type = 'create'
+      // 获得相对于父类的相对坐标
+      initX = Math.floor((event.pageX - rect.left) / props.size) * props.size
+      initY = Math.floor((event.pageY - rect.top) / props.size) * props.size
+      target = createEle({ left: initX, top: initY }, props)
+      event.target.append(target)
+      document.addEventListener('mousemove', mousemove)
+      document.addEventListener('mouseup', mouseup)
+    }
+    if (classList.includes('grid-resize')) {
+      type = 'resize'
+      target = event.target.parentNode
+      rect = target.getBoundingClientRect()
+      left = parseInt(target.style.left)
+      top = parseInt(target.style.top)
+      document.addEventListener('mousemove', mousemove)
+      document.addEventListener('mouseup', mouseup)
+    }
+    if (classList.includes('grid-content')) {
+      type = 'move'
+      target = event.target
+      rect = target.getBoundingClientRect()
+      left = parseInt(target.style.left)
+      top = parseInt(target.style.top)
+      initX = event.pageX
+      initY = event.pageY
+      document.addEventListener('mousemove', mousemove)
+      document.addEventListener('mouseup', mouseup)
+    }
   })
 }
