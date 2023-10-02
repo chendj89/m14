@@ -31,14 +31,12 @@ export default defineComponent({
   },
   setup(props) {
     const gridRef = ref()
-    const list = ref([h(NButton, {type:'primary'}, ()=>'123')])
     onMounted(() => {
-      handler(gridRef.value, props,list)
+      handler(gridRef.value, props)
     })
 
     return {
-      gridRef,
-      list
+      gridRef
     }
   },
   render() {
@@ -51,9 +49,7 @@ export default defineComponent({
           height: this.height + 'px',
           '--size': this.size * 2 + 'px'
         }}
-      >
-        {this.list.map((item) => h(item))}
-      </div>
+      ></div>
     )
   }
 })

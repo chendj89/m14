@@ -231,6 +231,17 @@ export const handler = (grid: any, props: any) => {
     }
     if (classList.includes('grid-content')) {
       type = 'move'
+      target = event.target.parentNode
+      rect = target.getBoundingClientRect()
+      left = parseInt(target.style.left)
+      top = parseInt(target.style.top)
+      initX = event.pageX
+      initY = event.pageY
+      document.addEventListener('mousemove', mousemove)
+      document.addEventListener('mouseup', mouseup)
+    }
+    if (classList.includes('grid-ele')) {
+      type = 'move'
       target = event.target
       rect = target.getBoundingClientRect()
       left = parseInt(target.style.left)

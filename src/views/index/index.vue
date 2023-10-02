@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Grid id="gd"></Grid>
+    <Grid></Grid>
     <n-button draggable="true" @dragstart="drag">按钮</n-button>
   </div>
 </template>
