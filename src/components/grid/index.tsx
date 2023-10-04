@@ -6,11 +6,11 @@ export default defineComponent({
   props: {
     width: {
       type: Number,
-      default: () => 600
+      default: () => 300
     },
     height: {
       type: Number,
-      default: () => 400
+      default: () => 150
     },
     size: {
       type: Number,
