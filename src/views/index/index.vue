@@ -3,7 +3,7 @@
     <!-- <Grid :size="40" :row="1"></Grid>
     <Grid style="margin-top: 20px" :size="40" :row="2"></Grid>
     <Grid style="margin-top: 20px" :size="40" :row="3"></Grid> -->
-    <Grid style="margin-top: 20px" :col="6" :row="4" :size="40"></Grid>
+    <Grid style="margin-top: 20px" :col="6" :row="3" :size="40"></Grid>
   </div>
 </template>
 <script lang="ts" setup name="Index">
