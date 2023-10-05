@@ -1,20 +1,25 @@
 import { handler } from './ts'
 import './index.scss'
 import { NButton } from 'naive-ui'
+import Cell from './cell'
 export default defineComponent({
   name: 'Grid',
   props: {
-    width: {
-      type: Number,
-      default: () => 300
-    },
-    height: {
-      type: Number,
-      default: () => 150
-    },
     size: {
       type: Number,
-      default: () => 50
+      default: () => 20
+    },
+    border: {
+      type: Number,
+      default: () => 4
+    },
+    col: {
+      type: Number,
+      default: () => 6
+    },
+    row: {
+      type: Number,
+      default: () => 2
     },
     activeBg: {
       type: String,
@@ -31,12 +36,24 @@ export default defineComponent({
   },
   setup(props) {
     const gridRef = ref()
+    const list: any = ref([])
+    const rect = ref()
     onMounted(() => {
-      handler(gridRef.value, props)
+      rect.value = gridRef.value.getBoundingClientRect()
+      handler(gridRef.value, props, list)
     })
-
+    let width = props.col * props.size + props.border * (props.col + 1)
+    let height = props.row * props.size + props.border * (props.row + 1)
+    const dataSize = `${width} x ${height} - ${props.border}`
+    const remove = (data: any) => {
+      list.value = list.value.filter((item: any) => item.id !== data.id)
+    }
     return {
-      gridRef
+      gridRef,
+      list,
+      dataSize,
+      remove,
+      rect
     }
   },
   render() {
@@ -45,11 +62,17 @@ export default defineComponent({
         ref="gridRef"
         class="grid"
         style={{
-          width: this.width + 'px',
-          height: this.height + 'px',
-          '--size': this.size * 2 + 'px'
+          '--size': this.size + 'px',
+          '--border': this.border + 'px',
+          '--col': this.col,
+          '--row': this.row
         }}
-      ></div>
+        data-size={this.dataSize}
+      >
+        {this.list.map((item: any) =>
+          h(Cell, { ...item, rect: this.rect, onRemove: this.remove })
+        )}
+      </div>
     )
   }
 })

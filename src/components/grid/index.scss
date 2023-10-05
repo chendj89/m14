@@ -1,13 +1,27 @@
 .grid {
   position: relative;
-
   background-image: linear-gradient(
-      0deg,
-      transparent 49%,
-      rgba(0, 0, 0, 0.1) 50%
+      to right,
+      rgb(203 213 225) var(--border),
+      transparent var(--border)
     ),
-    linear-gradient(90deg, transparent 49%, rgba(0, 0, 0, 0.1) 50%);
-  background-size: var(--size) var(--size);
+    linear-gradient(
+      to bottom,
+      rgb(203 213 225) var(--border),
+      transparent var(--border)
+    );
+  background-size: calc(var(--size) + var(--border))
+    calc(var(--size) + var(--border));
+    width: calc(var(--size) * var(--col) + var(--border) * (var(--col) + 1));
+    height: calc(var(--size) * var(--row) + var(--border) *  (var(--row) + 1));
+    &::after {
+      font-size: 12px;
+      content: attr(data-size);
+      position: absolute;
+      right: 0;
+      bottom: -16px;
+      color: rgb(203 213 225);
+    }
   &-close {
     position: absolute;
     right: 0;
@@ -22,7 +36,7 @@
       display: inline-block;
       z-index: 1;
       position: absolute;
-      top: 4px;
+      top: 0;
       right: 6px;
       font-size: 15px;
       color: #eee;
@@ -77,5 +91,10 @@
     flex-wrap: wrap;
     height: 100%;
     overflow-y: auto;
+  }
+  &-ele {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    position: absolute;
   }
 }

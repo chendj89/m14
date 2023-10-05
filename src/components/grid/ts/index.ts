@@ -1,3 +1,4 @@
+import { uuid } from '@/utils'
 export const collision = (ele: any, props: any) => {
   let has = false
   if (ele.parentNode) {
@@ -28,10 +29,10 @@ const dragover = (event: MouseEvent) => {
 }
 const drop = (event: MouseEvent) => {
   event.preventDefault()
-  const img=document.createElement("img")
-  img.src='https://avatars.githubusercontent.com/u/105529957'
-  img.style.width='36px'
-  img.style.height='36px'
+  const img = document.createElement('img')
+  img.src = 'https://avatars.githubusercontent.com/u/105529957'
+  img.style.width = '36px'
+  img.style.height = '36px'
   event.target.append(img)
 }
 
@@ -77,7 +78,7 @@ export const createEle = (params: any, props: any) => {
   return ele
 }
 
-export const handler = (grid: any, props: any) => {
+export const handler = (grid: any, props: any, list: any) => {
   let initX: any
   let initY: any
   let lastX: any
@@ -98,9 +99,10 @@ export const handler = (grid: any, props: any) => {
     rect = null
     target = null
   }
-  document.addEventListener('mousedown', (event: any) => {
+  grid.addEventListener('mousedown', (event: any) => {
     // event.preventDefault()
     const classList = Array.from(event.target.classList)
+    rect = grid.getBoundingClientRect()
     /**
      * 鼠标移动
      * @param event
@@ -108,32 +110,48 @@ export const handler = (grid: any, props: any) => {
     const mousemove = (event: MouseEvent) => {
       event.preventDefault()
       if (target && type == 'create') {
-        lastX = Math.round((event.pageX - rect.left) / props.size) * props.size
-        lastY = Math.round((event.pageY - rect.top) / props.size) * props.size
-        if (lastX >= rect.right - rect.left) {
-          lastX = rect.right - rect.left
+        let col = Math.round(
+          (event.pageX - rect.left) / (props.size + props.border)
+        )
+        let row = Math.round(
+          (event.pageY - rect.top) / (props.size + props.border)
+        )
+        lastX = col * props.size + col * props.border
+        lastY = row * props.size + row * props.border
+        // lastX = Math.round((event.pageX - rect.left) / props.size) * props.size
+        // lastY = Math.round((event.pageY - rect.top) / props.size) * props.size
+        if (lastX >= rect.right - rect.left - props.border) {
+          lastX = rect.right - rect.left - props.border
         }
-        if (lastY >= rect.bottom - rect.top) {
-          lastY = rect.bottom - rect.top
+        if (lastY >= rect.bottom - rect.top - props.border) {
+          lastY = rect.bottom - rect.top - props.border
         }
-        if (lastX <= 0) {
-          lastX = props.size
+        if (lastX <= props.border) {
+          lastX = props.size + props.border
         }
-        if (lastY <= 0) {
-          lastY = props.size
+        if (lastY <= props.border) {
+          lastY = props.size + props.border
         }
         collision(target, props)
         target.style.width = lastX - initX + 'px'
         target.style.height = lastY - initY + 'px'
       }
       if (target && type == 'resize') {
-        lastX = Math.round((event.pageX - rect.left) / props.size) * props.size
-        lastY = Math.round((event.pageY - rect.top) / props.size) * props.size
-        if (left + lastX >= props.width) {
-          lastX = props.width - left
+        let col = Math.floor(
+          (event.pageX - rect.left) / (props.size + props.border)
+        )
+        let row = Math.floor(
+          (event.pageY - rect.top) / (props.size + props.border)
+        )
+        lastX = col * props.size + (col - 1) * props.border
+        lastY = row * props.size + (row - 1) * props.border
+        console.log(lastX,rect.width)
+        if (left + lastX >= rect.width - props.border) {
+          lastX = rect.width - left - props.border
         }
-        if (top + lastY >= props.height) {
-          lastY = props.height - top
+      
+        if (top + lastY >= rect.height - props.border) {
+          lastY = rect.height - top - props.border
         }
         if (lastX <= 0) {
           lastX = props.size
@@ -186,6 +204,18 @@ export const handler = (grid: any, props: any) => {
               child.style.display = child.getAttribute('display') || 'block'
             })
           }
+          list.value.push({
+            style: {
+              width: target.style.width,
+              height: target.style.height,
+              left: target.style.left,
+              top: target.style.top
+            },
+            cls: ['grid-ele'],
+            id: uuid(4),
+            rect: grid.getBoundingClientRect()
+          })
+          target.parentNode.removeChild(target)
         }
       }
       if (target && type == 'resize') {
@@ -209,17 +239,23 @@ export const handler = (grid: any, props: any) => {
         target.style.zIndex = '1'
       }
       reset()
-      document.removeEventListener('mousemove', mousemove)
-      document.removeEventListener('mouseup', mouseup)
+      grid.removeEventListener('mousemove', mousemove)
+      grid.removeEventListener('mouseup', mouseup)
     }
     if (event.target == grid) {
       rect = grid.getBoundingClientRect()
       type = 'create'
       // 获得相对于父类的相对坐标
-      initX = Math.floor((event.pageX - rect.left) / props.size) * props.size
-      initY = Math.floor((event.pageY - rect.top) / props.size) * props.size
+      let col = Math.floor(
+        (event.pageX - rect.left) / (props.size + props.border)
+      )
+      let row = Math.floor(
+        (event.pageY - rect.top) / (props.size + props.border)
+      )
+      initX = col * props.size + (col + 1) * props.border
+      initY = row * props.size + (row + 1) * props.border
       target = createEle({ left: initX, top: initY }, props)
-      target.style.zIndex='2'
+      target.style.zIndex = '2'
       event.target.append(target)
       document.addEventListener('mousemove', mousemove)
       document.addEventListener('mouseup', mouseup)
@@ -227,36 +263,36 @@ export const handler = (grid: any, props: any) => {
     if (classList.includes('grid-resize')) {
       type = 'resize'
       target = event.target.parentNode
-      rect = target.getBoundingClientRect()
+      //rect = target.getBoundingClientRect()
       left = parseInt(target.style.left)
       top = parseInt(target.style.top)
-      target.style.zIndex='2'
+      target.style.zIndex = '2'
       document.addEventListener('mousemove', mousemove)
       document.addEventListener('mouseup', mouseup)
     }
-    if (classList.includes('grid-content')) {
-      type = 'move'
-      target = event.target.parentNode
-      rect = target.getBoundingClientRect()
-      left = parseInt(target.style.left)
-      top = parseInt(target.style.top)
-      initX = event.pageX
-      initY = event.pageY
-      target.style.zIndex='2'
-      document.addEventListener('mousemove', mousemove)
-      document.addEventListener('mouseup', mouseup)
-    }
-    if (classList.includes('grid-ele')) {
-      type = 'move'
-      target = event.target
-      rect = target.getBoundingClientRect()
-      left = parseInt(target.style.left)
-      top = parseInt(target.style.top)
-      initX = event.pageX
-      initY = event.pageY
-      target.style.zIndex='2'
-      document.addEventListener('mousemove', mousemove)
-      document.addEventListener('mouseup', mouseup)
-    }
+    // if (classList.includes('grid-content')) {
+    //   type = 'move'
+    //   target = event.target.parentNode
+    //   rect = target.getBoundingClientRect()
+    //   left = parseInt(target.style.left)
+    //   top = parseInt(target.style.top)
+    //   initX = event.pageX
+    //   initY = event.pageY
+    //   target.style.zIndex = '2'
+    //   document.addEventListener('mousemove', mousemove)
+    //   document.addEventListener('mouseup', mouseup)
+    // }
+    // if (classList.includes('grid-ele')) {
+    //   type = 'move'
+    //   target = event.target
+    //   rect = target.getBoundingClientRect()
+    //   left = parseInt(target.style.left)
+    //   top = parseInt(target.style.top)
+    //   initX = event.pageX
+    //   initY = event.pageY
+    //   target.style.zIndex = '2'
+    //   document.addEventListener('mousemove', mousemove)
+    //   document.addEventListener('mouseup', mouseup)
+    // }
   })
 }
