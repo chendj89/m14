@@ -38,7 +38,6 @@ export default defineComponent({
     return (
       <div style={this.style} class={this.cls} ref="eleRef">
         <div class="grid-close" onClick={this.close}></div>
-        <div class="grid-resize"></div>
       </div>
     )
   }

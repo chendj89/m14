@@ -94,3 +94,15 @@ export function capFirst(str: string, upperCase = true) {
     return str.charAt(0).toLowerCase() + str.slice(1)
   }
 }
+/**
+ * 生成emoji
+ * @returns 
+ */
+function getRandomEmoji() {
+  const min = 0x1F600;
+  const max = 0x1F64F;
+  const randomCodePoint = Math.floor(Math.random() * (max - min + 1)) + min;
+  const emoji = String.fromCodePoint(randomCodePoint);
+
+  return emoji;
+}
