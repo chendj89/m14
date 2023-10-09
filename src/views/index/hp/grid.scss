@@ -1,0 +1,25 @@
+.grid {
+  position: relative;
+  background-image: linear-gradient(
+      to right,
+      rgb(203 213 225) var(--border),
+      transparent var(--border)
+    ),
+    linear-gradient(
+      to bottom,
+      rgb(203 213 225) var(--border),
+      transparent var(--border)
+    );
+  background-size: calc(var(--size) + var(--border))
+    calc(var(--size) + var(--border));
+  width: calc(var(--size) * var(--col) + var(--border) * (var(--col) + 1));
+  height: calc(var(--size) * var(--row) + var(--border) * (var(--row) + 1));
+  &::after {
+    font-size: 12px;
+    content: attr(data-size);
+    position: absolute;
+    right: 0;
+    bottom: -16px;
+    color: rgb(203 213 225);
+  }
+}

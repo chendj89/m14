@@ -1,6 +1,7 @@
 import {
   Teleport,
   createVNode,
+  createApp,
   inject,
   type ComponentInternalInstance,
   render,

@@ -1,3 +1,7 @@
+import SimpleIconsTiktok from '~icons/simple-icons/tiktok'
+import SimpleIconsXbox from '~icons/simple-icons/xbox'
+import LogosNodejsIconAlt from '~icons/logos/nodejs-icon-alt'
+import SimpleIconsNike from '~icons/simple-icons/nike'
 export default defineComponent({
   name: 'cell',
   props: {
@@ -37,7 +41,10 @@ export default defineComponent({
   render() {
     return (
       <div style={this.style} class={this.cls} ref="eleRef">
+        <SimpleIconsTiktok class="grid-band"></SimpleIconsTiktok>
         <div class="grid-close" onClick={this.close}></div>
+        <SimpleIconsNike class="grid-type"></SimpleIconsNike>
+        <LogosNodejsIconAlt class="grid-slot"></LogosNodejsIconAlt>
       </div>
     )
   }
