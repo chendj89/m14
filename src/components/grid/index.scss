@@ -29,6 +29,7 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
+    z-index: 999;
     &::before {
       font-family: 'Font Awesome 5 Free';
       content: '\f00d';

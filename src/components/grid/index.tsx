@@ -29,6 +29,13 @@ export default defineComponent({
       type: String,
       default: () => 'rgba(0, 0, 0, 0.8)'
     },
+    /**
+     * 碰撞颜色
+     */
+    collision: {
+      type: String,
+      default: () => '#ff5c00'
+    },
     pd: {
       type: Number,
       default: () => 10

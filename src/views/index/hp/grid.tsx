@@ -2,6 +2,7 @@ import './grid.scss'
 import { handler } from '@/components/grid/ts/index.ts'
 import Cell from '@/components/grid/cell'
 import LogosNodejsIconAlt from '~icons/logos/nodejs-icon-alt'
+
 export default defineComponent({
   name: 'Grid',
   props: {
@@ -49,15 +50,19 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const gridRef = ref()
-    const list: any = ref([{
-      com:LogosNodejsIconAlt
-    }])
+    const gridRef = ref<HTMLDivElement | null>()
+    const list: any = ref([
+      {
+        com: LogosNodejsIconAlt
+      }
+    ])
     const rect = ref()
+
     onMounted(() => {
-      rect.value = gridRef.value.getBoundingClientRect()
+      rect.value = gridRef.value!.getBoundingClientRect()
       handler(gridRef.value, props, list)
     })
+
     let width = props.col * props.size + props.border * (props.col + 1)
     let height = props.row * props.size + props.border * (props.row + 1)
     const dataSize = `${width} x ${height} - ${props.border}`
