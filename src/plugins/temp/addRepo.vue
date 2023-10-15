@@ -1,11 +1,12 @@
 <template>
   <div class="temp">
-    <Form2 ref="form2Ref"></Form2>
-    <n-button @click="submit">确定</n-button>
+    <Grid style="margin-top: 20px" :col="7" :row="3" :size="40"></Grid>
+    <n-button style="margin-top: 40px;" @click="submit">确定</n-button>
   </div>
 </template>
 
 <script setup lang="ts" name="AddRepo">
+import Grid from '@/components/grid'
 import Form2 from './form'
 const form2Ref: any = ref(null)
 const submit = () => {
