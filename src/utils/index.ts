@@ -96,13 +96,27 @@ export function capFirst(str: string, upperCase = true) {
 }
 /**
  * 生成emoji
- * @returns 
+ * @returns
  */
 function getRandomEmoji() {
-  const min = 0x1F600;
-  const max = 0x1F64F;
-  const randomCodePoint = Math.floor(Math.random() * (max - min + 1)) + min;
-  const emoji = String.fromCodePoint(randomCodePoint);
+  const min = 0x1f600
+  const max = 0x1f64f
+  const randomCodePoint = Math.floor(Math.random() * (max - min + 1)) + min
+  const emoji = String.fromCodePoint(randomCodePoint)
 
-  return emoji;
+  return emoji
+}
+
+function deepCopy<T>(obj: T): T {
+  if (typeof obj !== 'object' || obj === null) {
+    return obj
+  }
+  if (Array.isArray(obj)) {
+    return obj.map((item) => deepCopy(item)) as unknown as T
+  }
+  const newObj = {} as T
+  for (let key in obj) {
+    newObj[key] = deepCopy(obj[key])
+  }
+  return newObj
 }
