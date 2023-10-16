@@ -2,9 +2,8 @@ import SimpleIconsTiktok from '~icons/simple-icons/tiktok'
 import SimpleIconsXbox from '~icons/simple-icons/xbox'
 import LogosNodejsIconAlt from '~icons/logos/nodejs-icon-alt'
 import SimpleIconsNike from '~icons/simple-icons/nike'
+import PhPlayFill from '~icons/ph/play-fill'
 import gsap from 'gsap'
-import { GSDevTools } from 'gsap-trial/GSDevTools'
-gsap.registerPlugin(GSDevTools)
 export default defineComponent({
   name: 'cell',
   props: {
@@ -27,6 +26,7 @@ export default defineComponent({
   },
   emits: ['remove'],
   setup(props, { emit }) {
+    let gp: gsap.Context
     const close = (event: MouseEvent) => {
       let parent: any = event.target.parentNode.parentNode
       const rect = parent.getBoundingClientRect()
@@ -35,53 +35,42 @@ export default defineComponent({
     }
     const eleRef = ref<HTMLDivElement | null>()
     const st = ref(props.style)
-    let gp: gsap.Context
+    
+    const onPlay = () => {
+      console.log(gp)
+    }
+
     onMounted(() => {
-      // gp = gsap.context((self) => {
-      //   let tl = gsap.to(self, {
-      //     x: 200,
-      //     duration: 0.5
-      //   })
-      //   // GSDevTools.create()
-      // }, eleRef.value!)
-      // gsap.to(eleRef.value!,{x:200,duration:1})
-      gsap.context((self) => {
-        // self.selector!('.grid-slot')
+      gp = gsap.context((self) => {
         let slot: HTMLDivElement = self.selector!('.grid-slot')
         let tl = gsap.timeline({
-          // paused: true
+          paused: true
         })
         tl.add(gsap.to(slot, { scale: 0.8, duration: 0.5 }))
-        .add(
-          gsap.to(slot, { x: "-=50", duration: 0.5 })
-        )
-        .add(
-          gsap.to(slot, { x: "+=100",rotateX:"+=360", duration: 1 })
-        )
-        .add(
-          gsap.to(slot, { x: "-=50",rotateX:"-=360", duration: 1 })
-        )
-        .add(
-          gsap.to(slot, {scale: 1, duration: 1 })
-        )
-        .add(
-          gsap.to(slot, {scale: 0.7,rotateZ:360,ease:"outIn", duration: 1 })
-        )
-        // GSDevTools.create({
-        //   animation: tl,
-        //   container: eleRef.value!,
-        //   minimal: true,
-        //   hideGlobalTimeline:true,
-        //   keyboard:true,
-        //   persist:true,
-        //   css: 'bottom:-42px;position: absolute;'
-        // })
+          .add(gsap.to(slot, { x: '-=50', duration: 0.5 }))
+          .add(gsap.to(slot, { x: '+=100', rotateX: '+=360', duration: 1 }))
+          .add(gsap.to(slot, { x: '-=50', rotateX: '-=360', duration: 1 }))
+          .add(gsap.to(slot, { scale: 1, duration: 1 }))
+          .add(
+            gsap.to(slot, {
+              scale: 0.7,
+              rotateZ: 360,
+              ease: 'outIn',
+              duration: 1
+            })
+          )
+        self.add('onClick', () => {
+          console.log('--')
+          tl.play()
+        })
       }, eleRef.value!)
     })
     return {
       close,
       eleRef,
-      st
+      st,
+      onPlay,
+      gp
     }
   },
   render() {
@@ -91,6 +80,7 @@ export default defineComponent({
         <div class="grid-close" onClick={this.close}></div>
         <SimpleIconsNike class="grid-type"></SimpleIconsNike>
         <LogosNodejsIconAlt class="grid-slot"></LogosNodejsIconAlt>
+        <PhPlayFill class="grid-play" onClick={this.gp.onClick}></PhPlayFill>
       </div>
     )
   }
