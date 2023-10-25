@@ -5,7 +5,11 @@ import SimpleIconsNike from '~icons/simple-icons/nike'
 import BiXCircle from '~icons/bi/x-circle'
 import gsap from 'gsap'
 import { GSDevTools } from 'gsap-trial/GSDevTools'
+import BiPlayFill from '~icons/bi/play-fill'
+import MenuIcon from '@/views/table/coms/menuIcon'
 gsap.registerPlugin(GSDevTools)
+
+import biList from '~icons/bi/x-circle'
 export default defineComponent({
   name: 'cell',
   props: {
@@ -37,50 +41,33 @@ export default defineComponent({
     const eleRef = ref<HTMLDivElement | null>()
     const st = ref(props.style)
     let gp: gsap.Context
-    onMounted(() => {
-      // gp = gsap.context((self) => {
-      //   let tl = gsap.to(self, {
-      //     x: 200,
-      //     duration: 0.5
-      //   })
-      //   // GSDevTools.create()
-      // }, eleRef.value!)
-      // gsap.to(eleRef.value!,{x:200,duration:1})
-      // gsap.context((self) => {
-      //   // self.selector!('.grid-slot')
-      //   let slot: HTMLDivElement = self.selector!('.grid-slot')
-      //   let tl = gsap.timeline({
-      //     // paused: true
-      //   })
-      //   tl.add(gsap.to(slot, { scale: 0.8, duration: 0.5 }))
-      //     .add(gsap.to(slot, { x: '-=50', duration: 0.5 }))
-      //     .add(gsap.to(slot, { x: '+=100', rotateX: '+=360', duration: 1 }))
-      //     .add(gsap.to(slot, { x: '-=50', rotateX: '-=360', duration: 1 }))
-      //     .add(gsap.to(slot, { scale: 1, duration: 1 }))
-      //     .add(
-      //       gsap.to(slot, {
-      //         scale: 0.7,
-      //         rotateZ: 360,
-      //         ease: 'outIn',
-      //         duration: 1
-      //       })
-      //     )
-      //   // GSDevTools.create({
-      //   //   animation: tl,
-      //   //   container: eleRef.value!,
-      //   //   minimal: true,
-      //   //   hideGlobalTimeline:true,
-      //   //   keyboard:true,
-      //   //   persist:true,
-      //   //   css: 'bottom:-42px;position: absolute;'
-      //   // })
-      // }, eleRef.value!)
-    })
+    let tl: any = null
+    const run = () => {
+      // self.selector!('.grid-slot')
+      let slot: HTMLDivElement = eleRef.value!.querySelector!('.grid-async')
+      tl = gsap.timeline({})
+      tl.add(gsap.to(slot, { scale: 0.8, duration: 0.5 }))
+        .add(gsap.to(slot, { x: '-=50', duration: 0.5 }))
+        .add(gsap.to(slot, { x: '+=100', rotateX: '+=360', duration: 1 }))
+        .add(gsap.to(slot, { x: '-=50', rotateX: '-=360', duration: 1 }))
+        .add(gsap.to(slot, { scale: 1, duration: 1, rotate: 360 }))
+    }
+    const replay = () => {
+      if (!tl.isActive()) {
+        tl.restart()
+      }
+    }
     const asyncComponent = ref(null)
     const drop = async (event) => {
-      asyncComponent.value = await defineAsyncComponent(
-        () => import('~icons/bi/cpu')
-      )
+      event.preventDefault()
+      let strdata = event.dataTransfer.getData('text/plain')
+      let data = JSON.parse(strdata)
+      if (data.type == 'MenuIcon') {
+        asyncComponent.value = h(MenuIcon, { src: data.ele })
+        nextTick(() => {
+          run()
+        })
+      }
     }
     const allowDrop = (event) => {
       event.preventDefault()
@@ -91,7 +78,8 @@ export default defineComponent({
       st,
       drop,
       allowDrop,
-      asyncComponent
+      asyncComponent,
+      replay
     }
   },
   render() {
@@ -105,12 +93,9 @@ export default defineComponent({
       >
         <SimpleIconsTiktok class="grid-band"></SimpleIconsTiktok>
         <BiXCircle class="grid-close" onClick={this.close}></BiXCircle>
-        <SimpleIconsNike class="grid-type"></SimpleIconsNike>
-        {h('div', [
-          this.asyncComponent
-            ? h(this.asyncComponent,{class:'grid-async'})
-            : h('button', {}, 'Load Async Component')
-        ])}
+        <BiPlayFill class="grid-type" onClick={this.replay}></BiPlayFill>
+        {this.asyncComponent &&
+          h('div', { class: 'grid-async' }, h(this.asyncComponent))}
       </div>
     )
   }

@@ -100,7 +100,6 @@ export const handler = (grid: any, props: any, list: any) => {
     target = null
   }
   document.addEventListener('mousedown', (event: any) => {
-    console.log('---')
     // event.preventDefault()
     const classList = Array.from(event.target.classList)
     rect = grid.getBoundingClientRect()
