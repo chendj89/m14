@@ -1,23 +1,29 @@
-import type { Ref, AllowedComponentProps } from 'vue'
-import type { InputProps } from 'naive-ui'
-import { NInput } from 'naive-ui'
+import { type InputProps, NInput } from 'naive-ui'
+import { type AllowedComponentProps, h, type Ref, render } from 'vue'
+import { deepCopy } from '@/utils'
+
 export function renderInput(
   value: Ref<string>,
   options: InputProps | AllowedComponentProps = {},
   slots: any = null,
-  params?: any
+  params: any = {}
 ) {
-  // 表格展示、编辑表格、表单、编辑表单
-  const { table, tableEdit, form, formEdit, search } = params
-  if (table) {
-    let disabled = true
-    disabled = params?.disabled
-      ? params?.disabled
-      : params?.table?.disabled
-      ? params?.table?.disabled
-      : false
+  const { table = {}, tableEdit = {}, form = {}, type = 'form' } = params
+  let opts = {}
+  switch (type) {
+    case 'table':
+      opts = deepCopy({}, options, table)
+      break
+    case 'tableEdit':
+      opts = deepCopy({}, options, tableEdit)
+      break
+    case 'form':
+      opts = deepCopy({}, options, form)
+      break
+    default:
+      opts = deepCopy({}, options)
+      break
   }
-
   return h(
     NInput,
     {
@@ -25,12 +31,9 @@ export function renderInput(
       onUpdateValue: (newVal: string) => {
         value.value = newVal
       },
-      ...options
+      ...opts
     },
     slots
   )
 }
-
-
-
 
