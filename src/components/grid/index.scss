@@ -22,14 +22,18 @@
     bottom: -16px;
     color: rgb(203 213 225);
   }
+  &-async {
+    color: #fff;
+  }
   &-close {
     position: absolute;
-    right: 0;
-    top: 0;
-    width: 20px;
-    height: 20px;
+    right: 5px;
+    top: 5px;
+    width: 15px;
+    height: 15px;
     cursor: pointer;
     z-index: 999;
+    color: #fff;
     &::before {
       font-family: 'Font Awesome 5 Free';
       content: '\f00d';

@@ -1,11 +1,14 @@
 <template>
-  <div>add</div>
+  <div>
+    <div>add</div>
+  </div>
 </template>
 
 <script setup lang="ts" name="AddTable">
 import { usePluginDialog, usePluginApp } from '@/plugins/usePluginDialog'
 import addRepo from '@/plugins/temp/addRepo.vue'
-let dialog2 = usePluginDialog()
+
+// let dialog2 = usePluginDialog()
 // dialog2({
 //   tpl: addRepo,
 //   opts: {

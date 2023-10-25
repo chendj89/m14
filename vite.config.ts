@@ -30,7 +30,7 @@ export default defineConfig({
     }),
     vueSetupExtend(),
     // svg图标
-    Icons({ autoInstall: true }),
+    Icons({ autoInstall: true, compiler: 'vue3' }),
     // 本地svg合成symbol
     createSvgIconsPlugin({
       iconDirs: [path.resolve(process.cwd(), 'src/icons')],

@@ -100,6 +100,7 @@ export const handler = (grid: any, props: any, list: any) => {
     target = null
   }
   document.addEventListener('mousedown', (event: any) => {
+    console.log('---')
     // event.preventDefault()
     const classList = Array.from(event.target.classList)
     rect = grid.getBoundingClientRect()
@@ -108,7 +109,6 @@ export const handler = (grid: any, props: any, list: any) => {
      * @param event
      */
     const mousemove = (event: MouseEvent) => {
-      event.preventDefault()
       if (target && type == 'create') {
         let col = Math.round(
           (event.pageX - rect.left) / (props.size + props.border)
@@ -190,7 +190,6 @@ export const handler = (grid: any, props: any, list: any) => {
      * @param event
      */
     const mouseup = (event: MouseEvent) => {
-      event.preventDefault()
       if (target && target.parentNode && type == 'create') {
         let rect2 = target.getBoundingClientRect()
         if (rect2.right + props.border < rect.left) {
@@ -272,39 +271,6 @@ export const handler = (grid: any, props: any, list: any) => {
     }
     document.addEventListener('mousemove', mousemove)
     document.addEventListener('mouseup', mouseup)
-    // if (classList.includes('grid-resize')) {
-    //   type = 'resize'
-    //   target = event.target.parentNode
-    //   //rect = target.getBoundingClientRect()
-    //   left = parseInt(target.style.left)
-    //   top = parseInt(target.style.top)
-    //   target.style.zIndex = '2'
-    //   document.addEventListener('mousemove', mousemove)
-    //   document.addEventListener('mouseup', mouseup)
-    // }
-    // if (classList.includes('grid-content')) {
-    //   type = 'move'
-    //   target = event.target.parentNode
-    //   rect = target.getBoundingClientRect()
-    //   left = parseInt(target.style.left)
-    //   top = parseInt(target.style.top)
-    //   initX = event.pageX
-    //   initY = event.pageY
-    //   target.style.zIndex = '2'
-    //   document.addEventListener('mousemove', mousemove)
-    //   document.addEventListener('mouseup', mouseup)
-    // }
-    // if (classList.includes('grid-ele')) {
-    //   type = 'move'
-    //   target = event.target
-    //   rect = target.getBoundingClientRect()
-    //   left = parseInt(target.style.left)
-    //   top = parseInt(target.style.top)
-    //   initX = event.pageX
-    //   initY = event.pageY
-    //   target.style.zIndex = '2'
-    //   document.addEventListener('mousemove', mousemove)
-    //   document.addEventListener('mouseup', mouseup)
-    // }
+   
   })
 }
