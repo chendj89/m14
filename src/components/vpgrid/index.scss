@@ -1,0 +1,27 @@
+.vp {
+  &-bg {
+    &-cell {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 6px;
+      user-select: none;
+    
+    }
+  }
+  &-grid {
+    border-radius: 6px;
+    border: var(--border) solid green;
+    width: calc(
+      var(--size) * var(--col) + var(--gap) * (var(--col) + 1) +
+        (var(--border) * 2)
+    );
+    height: calc(
+      var(--size) * var(--row) + var(--gap) * (var(--row) + 1) +
+        (var(--border) * 2)
+    );
+    background: #f1f1f1;
+    // background: #fff;
+  }
+}

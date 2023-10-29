@@ -1,18 +1,18 @@
 <template>
   <div class="temp">
-    <Grid style="margin-top: 20px" :col="7" :row="3" :size="40"></Grid>
+    <Grid style="margin-top: 20px" :col="7" :row="3" :size="32"></Grid>
     <div class="drag">
       <div
         class="drag-ele"
         draggable="true"
-        @dragstart="dragstart($event, 'bi-cpu')"
+        @dragstart="dragstart($event, 'animation')"
       >
         <BiCpu></BiCpu>
       </div>
       <div
         class="drag-ele"
         draggable="true"
-        @dragstart="dragstart($event, 'bi-messenger')"
+        @dragstart="dragstart($event, 'container')"
       >
         <BiMessenger></BiMessenger>
       </div>
@@ -44,25 +44,28 @@ const submit = () => {
   console.log(form2Ref.value.listRef)
 }
 const dragstart = (event, icon) => {
-  if (icon == 'bi-cpu') {
-    event.dataTransfer.setData('text/plain', {
-      id: 0,
-      type: 'bi/cpu',
-      ele: BiCpu
-    })
-  } else if (icon == 'bi/message') {
-    event.dataTransfer.setData('text/plain', {
-      id: 0,
-      type: 'bi/cpu',
-      ele: BiMessenger
-    })
+  if (icon == 'animation') {
+    event.dataTransfer.setData(
+      'data',
+      JSON.stringify({
+        type: 'animation',
+        name: 'bg'
+      })
+    )
+  } else if (icon == 'container') {
+    event.dataTransfer.setData(
+      'data',
+      JSON.stringify({
+        type: 'container',
+        count: 1
+      })
+    )
   } else if (icon == 'MenuIcon') {
     event.dataTransfer.setData(
-      'text/plain',
+      'data',
       JSON.stringify({
-        id: 0,
-        type: 'MenuIcon',
-        ele: 'https://avatars.githubusercontent.com/u/105529957'
+        type: 'icon',
+        icon: 'https://avatars.githubusercontent.com/u/105529957'
       })
     )
   }

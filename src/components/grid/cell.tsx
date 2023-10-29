@@ -10,6 +10,7 @@ import MenuIcon from '@/views/table/coms/menuIcon'
 gsap.registerPlugin(GSDevTools)
 
 import biList from '~icons/bi/x-circle'
+import Bg from './bg'
 export default defineComponent({
   name: 'cell',
   props: {
@@ -37,10 +38,13 @@ export default defineComponent({
       const rect = parent.getBoundingClientRect()
       console.log(props.rect)
       emit('remove', props)
+      hasAnimation.value = false
+      hasContainer.value = 0
     }
     const eleRef = ref<HTMLDivElement | null>()
     const st = ref(props.style)
     let gp: gsap.Context
+    const bg=ref(null)
     let tl: any = null
     const run = () => {
       // self.selector!('.grid-slot')
@@ -58,28 +62,49 @@ export default defineComponent({
       }
     }
     const asyncComponent = ref(null)
+    const hasAnimation = ref(false)
+    const hasContainer = ref(0)
+    const animationName = ref('')
     const drop = async (event) => {
       event.preventDefault()
-      let strdata = event.dataTransfer.getData('text/plain')
-      let data = JSON.parse(strdata)
-      if (data.type == 'MenuIcon') {
-        asyncComponent.value = h(MenuIcon, { src: data.ele })
-        nextTick(() => {
-          run()
-        })
+      let strdata = event.dataTransfer.getData('data')
+      if (strdata) {
+        let odata = JSON.parse(strdata)
+
+        if (odata.type == 'icon') {
+          asyncComponent.value = h(MenuIcon, { src: odata.icon })
+          nextTick(() => {
+            if (animationName.value == 'gsap') {
+              // run()
+            } else {
+              // asyncComponent.value = Bg
+            }
+          })
+        }
+        if (odata.type == 'animation') {
+          hasAnimation.value = true
+          animationName.value = odata.name
+          bg.value = Bg
+        }
+        if (odata.type == 'container') {
+          hasContainer.value = odata.count
+        }
       }
     }
     const allowDrop = (event) => {
       event.preventDefault()
     }
     return {
+      bg,
       close,
       eleRef,
       st,
       drop,
       allowDrop,
       asyncComponent,
-      replay
+      replay,
+      hasAnimation,
+      hasContainer
     }
   },
   render() {
@@ -91,9 +116,14 @@ export default defineComponent({
         class={this.cls}
         ref="eleRef"
       >
-        <SimpleIconsTiktok class="grid-band"></SimpleIconsTiktok>
+        {this.bg && h(this.bg)}
+        {this.hasContainer && (
+          <SimpleIconsTiktok class="grid-band"></SimpleIconsTiktok>
+        )}
         <BiXCircle class="grid-close" onClick={this.close}></BiXCircle>
-        <BiPlayFill class="grid-type" onClick={this.replay}></BiPlayFill>
+        {this.hasAnimation && (
+          <BiPlayFill class="grid-type" onClick={this.replay}></BiPlayFill>
+        )}
         {this.asyncComponent &&
           h('div', { class: 'grid-async' }, h(this.asyncComponent))}
       </div>

@@ -42,17 +42,17 @@ onMounted(() => {
 //     title: '添加仓库'
 //   }
 // })
-// const oApp = usePluginApp()
-// oApp({
-//   tpl: addRepo
-// })
+const oApp = usePluginApp()
+oApp({
+  tpl: addRepo
+})
 </script>
 
 <style lang="scss" scoped>
 .box {
   position: relative;
-  width: 500px;
-  height: 200px;
+  width: 312px;
+  height: 136px;
   overflow: hidden;
   background: rgba(#000,0.75);
   border-radius: 4px;
