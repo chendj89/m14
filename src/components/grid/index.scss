@@ -33,9 +33,10 @@
     height: 40px;
   }
   &-close {
+    display: none;
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: -5px;
+    top: -5px;
     width: 15px;
     height: 15px;
     cursor: pointer;
@@ -54,6 +55,9 @@
       color: #eee;
       pointer-events: none;
     }
+  }
+  &-ele:hover &-close {
+    display: block;
   }
   &-resize {
     position: absolute;

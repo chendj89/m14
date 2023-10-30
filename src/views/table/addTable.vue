@@ -44,7 +44,7 @@ onMounted(() => {
 // })
 const oApp = usePluginApp()
 oApp({
-  tpl: addRepo
+  tpl: addRepo,
 })
 </script>
 

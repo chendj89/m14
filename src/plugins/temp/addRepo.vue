@@ -1,6 +1,6 @@
 <template>
   <div class="temp">
-    <Grid style="margin-top: 20px" :col="7" :row="3" :size="32"></Grid>
+    <Grid style="margin-top: 20px" :col="7" :row="3" :size="40"></Grid>
     <div class="drag">
       <div
         class="drag-ele"

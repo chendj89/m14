@@ -63,7 +63,7 @@ export default defineComponent({
     }
     const asyncComponent = ref(null)
     const hasAnimation = ref(false)
-    const hasContainer = ref(0)
+    const hasContainer = ref(null)
     const animationName = ref('')
     const drop = async (event) => {
       event.preventDefault()

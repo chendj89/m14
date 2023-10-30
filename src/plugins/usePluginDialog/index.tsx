@@ -51,7 +51,7 @@ const dialog = defineComponent({
               'div',
               {
                 class: 'usePluginDialog',
-                style: 'z-index:1000;left:100px;top:100px'
+                style: 'z-index:1000;left:700px;top:100px'
               },
               [
                 h(
