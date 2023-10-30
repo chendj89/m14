@@ -11,6 +11,25 @@
         <img v-else class="box-img" :src="item.icon" alt="" />
       </div>
     </div>
+    <div class="box" :style="boxStyle">
+      <div
+        class="box-cell"
+        v-for="(item, index) in grid2"
+        :key="index"
+        :style="item.style"
+      >
+        <img v-if="item.icon" class="box-img" :src="item.icon" alt="" />
+        <video
+          autoplay
+          muted
+          playsinline
+          loop
+          v-else-if="item.video"
+          class="box-img box-video"
+          :src="item.video"
+        ></video>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -207,14 +226,58 @@ for (let i = 0; i < grid.length; i++) {
   let gridItem = grid[i]
   gridItem.style = createRect(gridItem.rect, { unit: 'px' })
 }
-console.log(boxStyle)
+const grid2 = [
+  {
+    icon: 'https://avatars.githubusercontent.com/u/11247099?v=4',
+    rect: {
+      left: 0,
+      top: 0,
+      col: 2,
+      row: 2
+    }
+  },
+  {
+    video:
+      'https://img-baofun.zhhainiao.com/pcwallpaper_ugc/scene/c54460f10e8e2f2fa06c5d8c9d2aab08_preview.mp4',
+    rect: {
+      left: 2,
+      top: 0,
+      col: 5,
+      row: 2
+    }
+  },
+  {
+    rect: {
+      left: 0,
+      top: 2,
+      col: 1,
+      row: 1
+    }
+  },
+  {
+    rect: {
+      left: 1,
+      top: 2,
+      col: 1,
+      row: 1
+    }
+  },
+ 
+]
+for (let i = 0; i < grid2.length; i++) {
+  let gridItem = grid2[i]
+  gridItem.style = createRect(gridItem.rect, { unit: 'px' })
+}
 </script>
 
 <style lang="scss" scoped>
 .box {
+  display: inline-block;
   position: relative;
   border: 10px solid #fff;
   background: #fff;
+  margin: 10px;
+  border-radius: 4px;
   &-cell {
     position: absolute;
     background-color: seagreen;
@@ -224,10 +287,14 @@ console.log(boxStyle)
     display: block;
     width: 100%;
     height: 100%;
+    border-radius: 4px;
   }
   &-canvas {
     width: 100%;
     height: 100%;
+  }
+  &-video {
+    object-fit: cover;
   }
 }
 </style>
