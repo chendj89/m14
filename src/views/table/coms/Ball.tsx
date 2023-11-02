@@ -60,7 +60,7 @@ export default defineComponent({
         z: 360,
         tick: 0.002,
         style: {},
-        delay: 1
+        delay: 0.25
       }
     ])
     let timer: any = null
@@ -107,7 +107,7 @@ export default defineComponent({
       }
     }
     const runerHander = () => {
-      isActive=true
+      isActive = true
       for (let i = 0; i < list.value.length; i++) {
         let item = list.value[i]
         if (hash[i] === null) {
@@ -140,11 +140,7 @@ export default defineComponent({
           go = true
         }
       }
-      if(go){
-        isActive=false
-      }
       tikerCount++
-      console.log('isActive',isActive,hash,go)
       if (go) {
         requestAnimationFrame(runerHander)
       } else {
@@ -153,10 +149,11 @@ export default defineComponent({
       }
     }
     const play = () => {
-      if(isActive){
-        clearRuner()
+      console.log(isActive)
+      if (isActive) {
         return
       }
+      clearRuner()
       runerHander()
     }
 
