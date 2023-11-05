@@ -1,0 +1,15 @@
+.oball {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: seagreen;
+  &-cell {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    background: seagreen;
+    z-index: 99999;
+  }
+}

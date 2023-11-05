@@ -30,12 +30,29 @@
         ></video>
       </div>
     </div>
+    <div class="box" :style="boxStyle">
+      <div
+        class="box-cell"
+        v-for="(item, index) in grid3"
+        :key="index"
+        :style="item.style"
+      >
+        <img v-if="item.icon" class="box-img" :src="item.icon" alt="" />
+        <Planet v-else-if="item.com == 'Planet'"></Planet>
+        <Week v-else-if="item.com == 'Week'"></Week>
+        <Ball v-else-if="item.com == 'Ball'"></Ball>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts" name="TableMenu">
 import TdCanvas from './td/index'
+import Planet from './coms/Planet.vue'
+import Week from './dingding/Week.tsx'
+import Ball from './coms/Ball.tsx'
 import gif from './c.gif'
+
 const createRect = (
   { left = 0, col = 1, top = 0, row = 1 },
   { gap = 10, size = 40, border = 10, isContainer = false, unit = null }
@@ -238,8 +255,7 @@ const grid2 = [
   },
   {
     icon:'https://img-baofun.zhhainiao.com/pcwallpaper_ugc/scene/c54460f10e8e2f2fa06c5d8c9d2aab08_preview.jpg?x-oss-process=image/resize,type_6,m_fill,h_228,w_406',
-    video:
-      'https://img-baofun.zhhainiao.com/pcwallpaper_ugc/scene/c54460f10e8e2f2fa06c5d8c9d2aab08_preview.mp4',
+    icon: 'https://raw.githubusercontent.com/chendj89/img/main/banner/onepiece.jpeg',
     rect: {
       left: 2,
       top: 0,
@@ -251,22 +267,63 @@ const grid2 = [
     rect: {
       left: 0,
       top: 2,
-      col: 1,
+      col: 2,
       row: 1
     }
   },
   {
     rect: {
-      left: 1,
+      left: 2,
       top: 2,
       col: 1,
       row: 1
     }
+  }
+]
+const grid3 = [
+  {
+    icon: 'https://avatars.githubusercontent.com/u/11247099?v=4',
+    rect: {
+      left: 0,
+      top: 0,
+      col: 2,
+      row: 2
+    }
   },
- 
+  {
+    com: 'Planet',
+    rect: {
+      left: 2,
+      top: 0,
+      col: 2,
+      row: 2
+    }
+  },
+  {
+    com: 'Week',
+    rect: {
+      left: 4,
+      top: 0,
+      col: 3,
+      row: 3
+    }
+  },
+  {
+    com:'Ball',
+    rect: {
+      left: 0,
+      top: 2,
+      col: 1,
+      row: 1
+    }
+  }
 ]
 for (let i = 0; i < grid2.length; i++) {
   let gridItem = grid2[i]
+  gridItem.style = createRect(gridItem.rect, { unit: 'px' })
+}
+for (let i = 0; i < grid3.length; i++) {
+  let gridItem = grid3[i]
   gridItem.style = createRect(gridItem.rect, { unit: 'px' })
 }
 </script>
