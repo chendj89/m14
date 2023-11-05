@@ -237,6 +237,7 @@ const grid2 = [
     }
   },
   {
+    icon:'https://img-baofun.zhhainiao.com/pcwallpaper_ugc/scene/c54460f10e8e2f2fa06c5d8c9d2aab08_preview.jpg?x-oss-process=image/resize,type_6,m_fill,h_228,w_406',
     video:
       'https://img-baofun.zhhainiao.com/pcwallpaper_ugc/scene/c54460f10e8e2f2fa06c5d8c9d2aab08_preview.mp4',
     rect: {
@@ -288,6 +289,7 @@ for (let i = 0; i < grid2.length; i++) {
     width: 100%;
     height: 100%;
     border-radius: 4px;
+    object-fit: cover;
   }
   &-canvas {
     width: 100%;
