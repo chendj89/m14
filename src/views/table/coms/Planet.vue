@@ -1,8 +1,8 @@
 <template>
   <div class="boxaa">
     <div class="container">
-      <div class="moon"></div>
-      <div class="planet"></div>
+      <div class="moon">☃️</div>
+      <div class="planet">🌚</div>
     </div>
   </div>
 </template>
@@ -35,42 +35,50 @@ $dot-size: $planet-size / 7;
 .planet {
   position: relative;
   border-radius: 100%;
-  background-color: $planet-color;
+  //background-color: $planet-color;
   width: $planet-size;
   height: $planet-size;
   box-shadow: inset -$moon-size -$moon-size 0px darken($planet-color, 5%);
-  &:before {
-    position: absolute;
-    top: $dot-size;
-    left: $translate-size;
-    content: '';
-    background: darken($planet-color, 10%);
-    border-radius: 100%;
-    width: $dot-size;
-    height: $dot-size;
-    display: block;
-  }
-  &:after {
-    position: absolute;
-    top: $translate-size * 1.3;
-    left: $dot-size * 1.3;
-    content: '';
-    background: darken($planet-color, 10%);
-    border-radius: 100%;
-    width: $translate-size;
-    height: $translate-size;
-    display: block;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  // &:before {
+  //   position: absolute;
+  //   top: $dot-size;
+  //   left: $translate-size;
+  //   content: '';
+  //   background: darken($planet-color, 10%);
+  //   border-radius: 100%;
+  //   width: $dot-size;
+  //   height: $dot-size;
+  //   display: block;
+  // }
+  // &:after {
+  //   position: absolute;
+  //   top: $translate-size * 1.3;
+  //   left: $dot-size * 1.3;
+  //   content: '';
+  //   background: darken($planet-color, 10%);
+  //   border-radius: 100%;
+  //   width: $translate-size;
+  //   height: $translate-size;
+  //   display: block;
+  // }
 }
 
 .moon {
   position: absolute;
   border-radius: 100%;
-  background-color: $moon-color;
+  // background-color: $moon-color;
   width: $moon-size;
   height: $moon-size;
   animation: orbit 2s ease-in-out infinite;
   transform: translate(-$translate-size, -$translate-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // animation: rotate 10s linear infinite forwards;
 }
 
 @keyframes orbit {
