@@ -254,6 +254,7 @@ const grid2 = [
     }
   },
   {
+    icon:'https://img-baofun.zhhainiao.com/pcwallpaper_ugc/scene/c54460f10e8e2f2fa06c5d8c9d2aab08_preview.jpg?x-oss-process=image/resize,type_6,m_fill,h_228,w_406',
     icon: 'https://raw.githubusercontent.com/chendj89/img/main/banner/onepiece.jpeg',
     rect: {
       left: 2,
