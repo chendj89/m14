@@ -2,6 +2,7 @@
   <div class="boxaa">
     <div class="container">
       <div class="moon">☃️</div>
+      <div class="moon moon2">👹</div>
       <div class="planet">🌚</div>
     </div>
   </div>
@@ -10,13 +11,10 @@
 <script setup lang="ts" name="Planet"></script>
 
 <style lang="scss" scoped>
-$planet-color: #885ae1;
-$moon-color: #dfe3e6;
-$planet-size: 40px;
+@use 'sass:math';
+$planet: 40px;
+$moon: 10px;
 
-$moon-size: $planet-size / 4.5;
-$translate-size: $planet-size / 3;
-$dot-size: $planet-size / 7;
 .boxaa {
   position: relative;
   width: 100%;
@@ -25,74 +23,106 @@ $dot-size: $planet-size / 7;
   background: darken(#75bad1, 55%);
   border-radius: 4px;
 }
+
 .container {
   position: absolute;
-  left: calc(50% - #{$planet-size} / 2);
-  top: calc(50% - #{$planet-size} / 2);
-  animation: rotate 10s linear infinite forwards;
+  left: calc(50% - #{$planet + $moon} / 2);
+  top: calc(50% - #{$planet + $moon} / 2);
+  // animation: rotate 10s linear infinite forwards;
+  width: $planet + $moon;
+  height: $planet + $moon;
 }
 
 .planet {
-  position: relative;
+  position: absolute;
   border-radius: 100%;
-  //background-color: $planet-color;
-  width: $planet-size;
-  height: $planet-size;
-  box-shadow: inset -$moon-size -$moon-size 0px darken($planet-color, 5%);
+  width: $planet;
+  height: $planet;
   display: flex;
+  left: 50%;
+  top: 50%;
+  margin-left: -$planet/2;
+  margin-top: -$planet/2;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
-  // &:before {
-  //   position: absolute;
-  //   top: $dot-size;
-  //   left: $translate-size;
-  //   content: '';
-  //   background: darken($planet-color, 10%);
-  //   border-radius: 100%;
-  //   width: $dot-size;
-  //   height: $dot-size;
-  //   display: block;
-  // }
-  // &:after {
-  //   position: absolute;
-  //   top: $translate-size * 1.3;
-  //   left: $dot-size * 1.3;
-  //   content: '';
-  //   background: darken($planet-color, 10%);
-  //   border-radius: 100%;
-  //   width: $translate-size;
-  //   height: $translate-size;
-  //   display: block;
-  // }
+  font-size: $planet;
+  z-index: 9;
 }
 
 .moon {
   position: absolute;
   border-radius: 100%;
-  // background-color: $moon-color;
-  width: $moon-size;
-  height: $moon-size;
-  animation: orbit 2s ease-in-out infinite;
-  transform: translate(-$translate-size, -$translate-size);
+  width: $moon;
+  height: $moon;
+  animation: orbit 4s ease-in-out infinite;
   display: flex;
   align-items: center;
   justify-content: center;
-  // animation: rotate 10s linear infinite forwards;
+  transform: translate(0, 0);
+  z-index: 1;
+  font-size: 12px;
+}
+
+.moon2 {
+  transform: translate(0, $planet);
+  animation: orbit2 4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+$next: (
+  0.5 + $moon / $planet)*100;
+
+@function getX($num){
+  @return math.sin(0)
 }
 
 @keyframes orbit {
   0% {
+    z-index: 10;
+    transform: translate(getX(0), 0
+    );
+}
+
+20% {
+  z-index: 10;
+}
+
+50% {
+  transform: translate(getX(1), getX(1));
+  z-index: 10;
+}
+
+#{$next}% {
+  z-index: 1;
+}
+
+100% {
+  z-index: 10;
+}
+}
+
+@keyframes orbit2 {
+  0% {
+    z-index: 10;
+    transform: translate(0, $planet );
   }
+
   20% {
     z-index: 10;
   }
+
   50% {
-    transform: translate($planet-size, $planet-size);
-    z-index: -1;
+    transform: translate($planet , 0);
+    z-index: 10;
   }
+
+  #{$next}% {
+    z-index: 1;
+  }
+
   100% {
-    z-index: -1;
+    transform: translate(0, $planet );
+    z-index: 10;
   }
 }
 
